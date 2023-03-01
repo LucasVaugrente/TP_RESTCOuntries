@@ -20,7 +20,10 @@ class Country {
         $this->nom = $nom;
         $this->population = $population;
         $this->topLevelDomains = $topLevelDomains;
+        $this->monnaies = null;
+        $this->langues = null;
     }
+
 
     // Methods 
     function toString(){

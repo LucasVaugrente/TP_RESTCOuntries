@@ -2,7 +2,7 @@
     class Language {
         
         // Instances
-        private $all_languages;
+        private static $all_languages;
 
         // Constructeur
         public function __construct($language) {

@@ -9,8 +9,8 @@
             $this->language = $language;
         }
 
-        public function addCurrency($language) {
-            $this.$all_languages.push($language);
+        public function addLanguage($language) {
+            Language::$all_languages[];
         }
     }
 ?>

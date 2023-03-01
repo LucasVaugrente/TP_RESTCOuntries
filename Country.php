@@ -82,21 +82,22 @@ class Country {
             
             new Country($codeAlpha3 ,$superficie ,$paysFrontaliers ,$capitale ,$continent ,$gentile ,$drapeau ,$nom ,$population ,$topLevelDomains);
             
-            //echo $nom;
+            
         }
             
         return;
     }
 
+    // -------------------- METHODS --------------------
     static function add_country($country) {
-        array_push(Country::$all_countries,$country);
+        Country::$all_countries[$country->get_codeAlpha3()] = $country;
     }
 
     static function remove_country() {
         // TODO
     }
 
-    // Methods GETTER & SETTER
+    // -------------------- GETTER & SETTER --------------------
     function set_codeAlpha3($codeAlpha3) {
         $this->codeAlpha3 = $codeAlpha3;
     }

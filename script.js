@@ -14967,11 +14967,12 @@ countries = [
     }
 ]
 
+/* ########################################### CLASSE COUNTRY ########################################### */
 all_countries = []; // tableau associatif d'objets Country
 
 class Country {
 
-    constructor (codeAlpha3 ,superficie ,paysFrontaliers ,capitale ,continent ,gentile ,drapeau ,nom ,population ,topLevelDomains){
+    constructor(codeAlpha3, superficie, paysFrontaliers, capitale, continent, gentile, drapeau, nom, population, topLevelDomains) {
         this.codeAlpha3 = codeAlpha3;
         this.superficie = superficie;
         this.paysFrontaliers = paysFrontaliers;
@@ -14989,20 +14990,20 @@ class Country {
 
     // Methods 
     toString() {
-        return "Pays : this.nom";
+        return "Pays : " + this.nom;
     }
 
     static fill_db(source) {
         data = file_get_contents(source);
         data_decode = json_decode(data);
         // foreach (data_decode as key => value) {
-            
+
         //     if(isset( value.area)){
         //         superficie =  value.area;
         //     }else{
         //         superficie = null;
         //     }
-            
+
 
         //     if(isset(value.borders)){
         //         paysFrontaliers = value.borders;
@@ -15015,28 +15016,28 @@ class Country {
         //     }else{
         //         capitale = null;
         //     }
-            
+
         //     if(isset(value.continent)){
         //         continent =  value.continent;
         //     }else{
         //         continent = null;
         //     }
-           
+
         //     if(isset(value.languages[0].nativeName)){
         //         gentile =  value.languages[0].nativeName;
         //     }else{
         //         gentile = null;
         //     }
-            
+
         //     codeAlpha3 = value.alpha3Code;
         //     drapeau = value.flags[0];
         //     nom = value.name;
         //     population = value.population;
         //     topLevelDomains = value.topLevelDomain;
-            
+
         //     new Country(codeAlpha3 ,superficie ,paysFrontaliers ,capitale ,continent ,gentile ,drapeau ,nom ,population ,topLevelDomains);   
         // }
-            
+
         return;
     }
 
@@ -15049,7 +15050,7 @@ class Country {
         // TODO
     }
 
-    getPopDensity(){
+    getPopDensity() {
         return this.population / this.superficie;
     }
 
@@ -15085,7 +15086,7 @@ class Country {
     get_paysFrontaliers() {
         return this.paysFrontaliers;
     }
-    
+
     set_capitale(capitale) {
         this.capitale = capitale;
     }
@@ -15160,6 +15161,7 @@ class Country {
 }
 
 /* ########################################### CLASSE CURRENCY ########################################### */
+all_currencies = [];
 class Currency {
 
     // Constructor
@@ -15173,7 +15175,7 @@ class Currency {
     }
 
     addCurrency(currency) {
-        array_push(this.all_currencies, currency);
+        all_currencies.push(currency);
     }
 
     // Methods GETTER & SETTER
@@ -15183,5 +15185,19 @@ class Currency {
 
     get_currency() {
         return this._currency;
+    }
+}
+
+/* ########################################### CLASSE LANGUAGE ########################################### */
+all_languages = [];
+class Language {
+
+    // Constructeur
+    constructor(language) {
+        this.language = language;
+    }
+
+    addLanguage(language) {
+        all_languages.push(language);
     }
 }

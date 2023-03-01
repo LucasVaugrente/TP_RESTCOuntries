@@ -42,8 +42,6 @@ class Country {
         $data_decode = json_decode($data);
         foreach ($data_decode as $key => $value){
             
-            $codeAlpha3 = $value->alpha3Code;
-
             if(isset( $value->area)){
                 $superficie =  $value->area;
             }else{
@@ -75,14 +73,14 @@ class Country {
                 $gentile = null;
             }
 
+            $codeAlpha3 = $value->alpha3Code;
             $drapeau = $value->flags;
+            //print_r($drapeau);
             $nom = $value->name;
             $population = $value->population;
             $topLevelDomains = $value->topLevelDomain;
             
-            new Country($codeAlpha3 ,$superficie ,$paysFrontaliers ,$capitale ,$continent ,$gentile ,$drapeau ,$nom ,$population ,$topLevelDomains);
-            
-            
+            new Country($codeAlpha3 ,$superficie ,$paysFrontaliers ,$capitale ,$continent ,$gentile ,$drapeau ,$nom ,$population ,$topLevelDomains);   
         }
             
         return;
@@ -95,6 +93,18 @@ class Country {
 
     static function remove_country() {
         // TODO
+    }
+
+    function getPopDensity(){
+        return $this->population / $this->superficie;
+    }
+
+    function getBorders(){
+        $bordersObject = array();
+        foreach ($this->paysFrontaliers as $key => $value) {
+            array_push($bordersObject,Country::$all_countries[$value]);
+        }
+        return $bordersObject;
     }
 
     // -------------------- GETTER & SETTER --------------------
@@ -200,7 +210,11 @@ class Country {
 //$test = new Country($codeAlpha3 ,$superficie ,$paysFrontaliers ,$capitale ,$continent ,$gentile ,$drapeau ,$nom ,$population ,$topLevelDomains);
 //echo $test->toString();
 Country::fill_db("countries.json");
-echo '<pre>',
+/*echo '<pre>',
 print_r(Country::$all_countries);
-echo '</pre>';
+echo '</pre>';*/
+echo Country::$all_countries['FRA']->getPopDensity();
+echo '<pre>',
+print_r(Country::$all_countries['FRA']->getBorders());
+echo '</pre>';  
 ?>

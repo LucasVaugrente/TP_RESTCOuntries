@@ -2,16 +2,7 @@
 class Country {
   
     // Properties
-    public $codeAlpha3 ;
-    public $superficie ;
-    public $paysFrontaliers ;
-    public $capitale ;
-    public $continent ;
-    public $gentile ;
-    public $drapeau ;
-    public $nom ;
-    public $population ;
-    public $topLevelDomains ;
+
     public $monnaies;
     public $langues;
 
@@ -29,7 +20,6 @@ class Country {
         $this->nom = $nom;
         $this->population = $population;
         $this->topLevelDomains = $topLevelDomains;
-        Country::add_country($this);
     }
 
     // Methods 
@@ -67,15 +57,14 @@ class Country {
                 $continent = null;
             }
            
-            if(isset($value->languages->nativeName)){
-                $gentile =  $value->languages->nativeName;
+            if(isset($value->languages[0]->nativeName)){
+                $gentile =  $value->languages[0]->nativeName;
             }else{
                 $gentile = null;
             }
-
+            
             $codeAlpha3 = $value->alpha3Code;
-            $drapeau = $value->flags;
-            //print_r($drapeau);
+            $drapeau = $value->flags[0];
             $nom = $value->name;
             $population = $value->population;
             $topLevelDomains = $value->topLevelDomain;

@@ -1,7 +1,7 @@
 <?php
-    $countries = file_get_contents("countries.json");
+    // $countries = file_get_contents("countries.json");
 
-    $countriesJson = json_decode($countries);
+    // $countriesJson = json_decode($countries);
 
     // $all_currencies = [];
     
@@ -36,7 +36,7 @@
         }
 
         public function addCurrency($currency) {
-            $this.$all_currencies.push($currency);
+            array_psuh($this.$all_currencies, $currency);
         }
     
         // Methods GETTER & SETTER
@@ -48,4 +48,5 @@
             return $this->currency;
         }
     }
+
 ?>

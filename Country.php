@@ -18,7 +18,6 @@ class Country {
     static public $all_countries = array(); // tableau associatif d'objets Country
     
 
-    
     function __construct($codeAlpha3 ,$superficie ,$paysFrontaliers ,$capitale ,$continent ,$gentile ,$drapeau ,$nom ,$population ,$topLevelDomains){
         $this->codeAlpha3 = $codeAlpha3;
         $this->superficie = $superficie;
@@ -30,6 +29,7 @@ class Country {
         $this->nom = $nom;
         $this->population = $population;
         $this->topLevelDomains = $topLevelDomains;
+        Country::add_country($this);
     }
 
     // Methods 
@@ -41,34 +41,63 @@ class Country {
         $data = file_get_contents($source);
         $data_decode = json_decode($data);
         foreach ($data_decode as $key => $value){
+            
             $codeAlpha3 = $value->alpha3Code;
-            $superficie = $value->area;
-            $paysFrontaliers = $value->borders;
-            $capitale = $value->capital;
-            $continent = $value->continent;
-            //$gentile = $value->languages['nativeName'];
+
+            if(isset( $value->area)){
+                $superficie =  $value->area;
+            }else{
+                $superficie = null;
+            }
+            
+
+            if(isset($value->borders)){
+                $paysFrontaliers = $value->borders;
+            }else{
+                $paysFrontaliers = null;
+            }
+
+            if(isset($value->capital)){
+                $capitale = $value->capital;
+            }else{
+                $capitale = null;
+            }
+            
+            if(isset($value->continent)){
+                $continent =  $value->continent;
+            }else{
+                $continent = null;
+            }
+           
+            if(isset($value->languages->nativeName)){
+                $gentile =  $value->languages->nativeName;
+            }else{
+                $gentile = null;
+            }
+
             $drapeau = $value->flags;
             $nom = $value->name;
             $population = $value->population;
             $topLevelDomains = $value->topLevelDomain;
             
-            //$this->add_country(new Country($codeAlpha3 ,$superficie ,$paysFrontaliers ,$capitale ,$continent ,$gentile ,$drapeau ,$nom ,$population ,$topLevelDomains));
+            new Country($codeAlpha3 ,$superficie ,$paysFrontaliers ,$capitale ,$continent ,$gentile ,$drapeau ,$nom ,$population ,$topLevelDomains);
             
-            //echo $nom;
+            
         }
             
         return;
     }
 
-    function add_country($country) {
-        $this->all_countries.push($country);
+    // -------------------- METHODS --------------------
+    static function add_country($country) {
+        Country::$all_countries[$country->get_codeAlpha3()] = $country;
     }
 
-    function remove_country() {
+    static function remove_country() {
         // TODO
     }
 
-    // Methods GETTER & SETTER
+    // -------------------- GETTER & SETTER --------------------
     function set_codeAlpha3($codeAlpha3) {
         $this->codeAlpha3 = $codeAlpha3;
     }
@@ -171,4 +200,7 @@ class Country {
 //$test = new Country($codeAlpha3 ,$superficie ,$paysFrontaliers ,$capitale ,$continent ,$gentile ,$drapeau ,$nom ,$population ,$topLevelDomains);
 //echo $test->toString();
 Country::fill_db("countries.json");
+echo '<pre>',
+print_r(Country::$all_countries);
+echo '</pre>';
 ?>

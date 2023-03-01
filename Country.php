@@ -2,10 +2,6 @@
 class Country {
   
     // Properties
-
-    public $monnaies;
-    public $langues;
-
     static public $all_countries = array(); // tableau associatif d'objets Country
     
 

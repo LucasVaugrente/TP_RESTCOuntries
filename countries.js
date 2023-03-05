@@ -1,5 +1,5 @@
 /* ########################################### DATA ########################################### */
-countries = [
+const countries = [
     {
         "name": "Afghanistan",
         "topLevelDomain": [".af"],
@@ -14969,10 +14969,12 @@ countries = [
 
 /* ########################################### CLASSE COUNTRY ########################################### */
 all_countries = []; // tableau associatif d'objets Country
+all_currencies = []; // tableau associatif d'objets Currency
+
 
 class Country {
 
-    constructor(codeAlpha3, superficie, paysFrontaliers, capitale, continent, gentile, drapeau, nom, population, topLevelDomains) {
+    constructor(codeAlpha3, superficie, paysFrontaliers, capitale, continent, gentile, drapeau, nom, population, topLevelDomains, monnaies) {
         this.codeAlpha3 = codeAlpha3;
         this.superficie = superficie;
         this.paysFrontaliers = paysFrontaliers;
@@ -14983,67 +14985,19 @@ class Country {
         this.nom = nom;
         this.population = population;
         this.topLevelDomains = topLevelDomains;
-        this.monnaies = null;
+        this.monnaies = monnaies;
         this.langues = null;
     }
 
 
     // Methods 
     toString() {
-        return "Pays : " + this.nom;
-    }
-
-    static fill_db(source) {
-        data = file_get_contents(source);
-        data_decode = json_decode(data);
-        // foreach (data_decode as key => value) {
-
-        //     if(isset( value.area)){
-        //         superficie =  value.area;
-        //     }else{
-        //         superficie = null;
-        //     }
-
-
-        //     if(isset(value.borders)){
-        //         paysFrontaliers = value.borders;
-        //     }else{
-        //         paysFrontaliers = null;
-        //     }
-
-        //     if(isset(value.capital)){
-        //         capitale = value.capital;
-        //     }else{
-        //         capitale = null;
-        //     }
-
-        //     if(isset(value.continent)){
-        //         continent =  value.continent;
-        //     }else{
-        //         continent = null;
-        //     }
-
-        //     if(isset(value.languages[0].nativeName)){
-        //         gentile =  value.languages[0].nativeName;
-        //     }else{
-        //         gentile = null;
-        //     }
-
-        //     codeAlpha3 = value.alpha3Code;
-        //     drapeau = value.flags[0];
-        //     nom = value.name;
-        //     population = value.population;
-        //     topLevelDomains = value.topLevelDomain;
-
-        //     new Country(codeAlpha3 ,superficie ,paysFrontaliers ,capitale ,continent ,gentile ,drapeau ,nom ,population ,topLevelDomains);   
-        // }
-
-        return;
+        return "Nom du pays : " + this.nom;
     }
 
     // -------------------- METHODS --------------------
-    add_country(country) {
-        all_countries[country.get_codeAlpha3()] = country;
+    add_country() {
+        all_countries[this.get_codeAlpha3()] = this;
     }
 
     remove_country() {
@@ -15055,11 +15009,19 @@ class Country {
     }
 
     getBorders() {
-        bordersObject = array();
-        // foreach (this.paysFrontaliers as key => value) {
-        //     array_push(bordersObject, all_countries[value]);
-        // }
+        let bordersObject = [];
+        for (const value in this.paysFrontaliers) {
+            bordersObject.push(all_countries[value]);
+        }
         return bordersObject;
+    }
+
+    getCurencies() {
+
+    }
+
+    getLanguages() {
+
     }
 
     // -------------------- GETTER & SETTER --------------------
@@ -15161,7 +15123,6 @@ class Country {
 }
 
 /* ########################################### CLASSE CURRENCY ########################################### */
-all_currencies = [];
 class Currency {
 
     // Constructor
@@ -15174,8 +15135,8 @@ class Currency {
         return "Monnaie du pays : " + this._currency;
     }
 
-    addCurrency(currency) {
-        all_currencies.push(currency);
+    addCurrency() {
+        all_currencies.push(this);
     }
 
     // Methods GETTER & SETTER
@@ -15201,3 +15162,70 @@ class Language {
         all_languages.push(language);
     }
 }
+
+function fill_db() {
+
+    countries.forEach(value => {
+
+        if (value.hasOwnProperty("area")) {
+            superficie = value.area;
+        } else {
+            superficie = null;
+        }
+
+        if (value.hasOwnProperty("borders")) {
+            paysFrontaliers = value.borders;
+        } else {
+            paysFrontaliers = null;
+        }
+
+        if (value.hasOwnProperty("capital")) {
+            capitale = value.capital;
+        } else {
+            capitale = null;
+        }
+
+        if (value.hasOwnProperty("continent")) {
+            continent = value.continent;
+        } else {
+            continent = null;
+        }
+
+        if (value.languages[0].hasOwnProperty("nativeName")) {
+            gentile = value.languages[0].nativeName;
+        } else {
+            gentile = null;
+        }
+
+        codeAlpha3 = value.alpha3Code;
+        drapeau = value.flags[0];
+        nom = value.name;
+        population = value.population;
+        topLevelDomains = value.topLevelDomain;
+
+        if (value.hasOwnProperty("currencies")) {
+            monnaies = value.currencies[0].code;
+        }
+
+        let country = new Country(codeAlpha3, superficie, paysFrontaliers, capitale, continent, gentile, drapeau, nom, population, topLevelDomains, monnaies);
+
+        country.add_country();
+
+        // Vérification si la monnaie existe déjà dans le tableau all_currencies
+        for (let index = 0; index < all_currencies.length; index++) {
+            if(all_currencies[index].get_currency() === country.get_monnaies()) {
+                return;
+            }
+        }
+        let monnaie = new Currency(monnaies);
+        monnaie.addCurrency();
+        
+        return;
+    });
+
+    return;
+}
+
+fill_db();
+
+console.log(all_currencies);

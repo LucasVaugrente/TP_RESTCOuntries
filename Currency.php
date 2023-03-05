@@ -35,9 +35,6 @@
             return "Monnaie du pays : " + $this->currency;
         }
 
-        public function addCurrency($currency) {
-            array_psuh($this.$all_currencies, $currency);
-        }
     
         // Methods GETTER & SETTER
         function set_currency($currency) {

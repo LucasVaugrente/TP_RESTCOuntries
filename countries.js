@@ -15203,23 +15203,38 @@ function fill_db() {
         population = value.population;
         topLevelDomains = value.topLevelDomain;
 
+        let tab_monnaies = [];
+
+        // S'il existe le champ "currencies" dans le pays
         if (value.hasOwnProperty("currencies")) {
-            monnaies = value.currencies[0].code;
+            // S'il a au moins 1 dans currencies
+            if(value.currencies.length >= 1) {
+                for (let i = 0; i < value.currencies.length; i++) {
+                    let cpt = 0;
+                    // Boucle qui vérifie la monnaie existe déjà dans all_currencies
+                    for (let j = 0; j < all_currencies.length; j++) {
+                        console.log(all_currencies[j].get_currency());
+                        if(all_currencies[j].get_currency() === value.currencies[i].code) {
+                            break;
+                        }
+                        cpt++;
+                    }
+                    // Si on n'a pas trouvé la monnaie dans all_currencies
+                    if(cpt == all_currencies.length) {
+                        let monnaie = new Currency(value.currencies[i].code);
+                        tab_monnaies.push(monnaie);
+                        monnaie.addCurrency();
+                    }
+                }
+            }
+        } else {
+            monnaies = null;
         }
 
-        let country = new Country(codeAlpha3, superficie, paysFrontaliers, capitale, continent, gentile, drapeau, nom, population, topLevelDomains, monnaies);
+        let country = new Country(codeAlpha3, superficie, paysFrontaliers, capitale, continent, gentile, drapeau, nom, population, topLevelDomains, tab_monnaies);
 
         country.add_country();
 
-        // Vérification si la monnaie existe déjà dans le tableau all_currencies
-        for (let index = 0; index < all_currencies.length; index++) {
-            if(all_currencies[index].get_currency() === country.get_monnaies()) {
-                return;
-            }
-        }
-        let monnaie = new Currency(monnaies);
-        monnaie.addCurrency();
-        
         return;
     });
 

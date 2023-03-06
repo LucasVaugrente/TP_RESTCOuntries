@@ -6,7 +6,16 @@
  */
 function outsideTheContinent() {
     for (let codeAlpha3 in all_countries) {
-        console.log(all_countries[codeAlpha3].getBorders());
+        let countrie = all_countries[codeAlpha3];
+        let continent = countrie.continent;
+        let borders = countrie.getBorders();
+        for (const borderCountrie of borders) {
+            if(borderCountrie.continent != continent){
+                console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+            }
+            console.log(borderCountrie);
+        }
+        
     }
 }
 

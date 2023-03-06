@@ -14915,6 +14915,26 @@ class Language {
   }
 }
 
+function deleteUndefinedCountries(){
+  for (let codeAlpha3 in all_countries) {
+    let countrie = all_countries[codeAlpha3];
+    let borders = countrie.getBorders();
+    for (const borderCountrie of borders) {
+      let borderCountrieGetBorders = borderCountrie.getBorders();
+      for (let index = 0; index < borderCountrieGetBorders.length; index++) {
+        if(borderCountrieGetBorders[index] == undefined){
+          borderCountrie.paysFrontaliers = borderCountrie.paysFrontaliers.filter(border => border != borderCountrie.paysFrontaliers[index]);
+        }
+      }
+      
+  
+      
+      
+    }
+    
+  }
+}
+
 function fill_db() {
   countries.forEach((value) => {
     if (value.hasOwnProperty("area")) {
@@ -14923,7 +14943,7 @@ function fill_db() {
       superficie = null;
     }
 
-    if (value.hasOwnProperty("borders")) {
+    if (value.hasOwnProperty("borders") ) {
       paysFrontaliers = value.borders;
     } else {
       paysFrontaliers = null;
@@ -15032,6 +15052,8 @@ function fill_db() {
   return;
 }
 
-fill_db();
 
+
+fill_db();
+deleteUndefinedCountries();
 // console.log(all_currencies);

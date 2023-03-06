@@ -14723,23 +14723,23 @@ class Country {
     monnaies,
     langues
   ) {
-    this.codeAlpha3 = codeAlpha3;
-    this.superficie = superficie;
-    this.paysFrontaliers = paysFrontaliers;
-    this.capitale = capitale;
-    this.continent = continent;
-    this.gentile = gentile;
-    this.drapeau = drapeau;
-    this.nom = nom;
-    this.population = population;
-    this.topLevelDomains = topLevelDomains;
-    this.monnaies = monnaies;
-    this.langues = langues;
+    this._codeAlpha3 = codeAlpha3;
+    this._superficie = superficie;
+    this._paysFrontaliers = paysFrontaliers;
+    this._capitale = capitale;
+    this._continent = continent;
+    this._gentile = gentile;
+    this._drapeau = drapeau;
+    this._nom = nom;
+    this._population = population;
+    this._topLevelDomains = topLevelDomains;
+    this._monnaies = monnaies;
+    this._langues = langues;
   }
 
   // Methods
   toString() {
-    return "Nom du pays : " + this.nom;
+    return "Nom du pays : " + this._nom;
   }
 
   // -------------------- METHODS --------------------
@@ -14747,12 +14747,8 @@ class Country {
     all_countries[this.get_codeAlpha3()] = this;
   }
 
-  remove_country() {
-    // TODO
-  }
-
   getPopDensity() {
-    return this.population / this.superficie;
+    return this._population / this._superficie;
   }
 
   getBorders() {
@@ -14768,100 +14764,100 @@ class Country {
   getLanguages() { }
 
   // -------------------- GETTER & SETTER --------------------
-  set_codeAlpha3(codeAlpha3) {
-    this.codeAlpha3 = codeAlpha3;
+  set codeAlpha3(codeAlpha3) {
+    this._codeAlpha3 = codeAlpha3;
   }
 
-  get_codeAlpha3() {
-    return this.codeAlpha3;
+  get codeAlpha3() {
+    return this._codeAlpha3;
   }
 
-  set_superficie(superficie) {
-    this.superficie = superficie;
+  set superficie(superficie) {
+    this._superficie = superficie;
   }
 
-  get_superficie() {
-    return this.superficie;
+  get superficie() {
+    return this._superficie;
   }
 
-  set_paysFrontaliers(paysFrontaliers) {
-    this.paysFrontaliers = paysFrontaliers;
+  set paysFrontaliers(paysFrontaliers) {
+    this._paysFrontaliers = paysFrontaliers;
   }
 
-  get_paysFrontaliers() {
-    return this.paysFrontaliers;
+  get paysFrontaliers() {
+    return this._paysFrontaliers;
   }
 
-  set_capitale(capitale) {
-    this.capitale = capitale;
+  set capitale(capitale) {
+    this._capitale = capitale;
   }
 
-  get_capitale() {
-    return this.capitale;
+  get capitale() {
+    return this._capitale;
   }
 
-  set_continent(continent) {
-    this.continent = continent;
+  set continent(continent) {
+    this._continent = continent;
   }
 
-  get_continent() {
-    return this.continent;
+  get continent() {
+    return this._continent;
   }
 
-  set_gentile(gentile) {
-    this.gentile = gentile;
+  set gentile(gentile) {
+    this._gentile = gentile;
   }
 
-  get_gentile() {
-    return this.gentile;
+  get gentile() {
+    return this._gentile;
   }
 
-  set_drapeau(drapeau) {
-    this.drapeau = drapeau;
+  set drapeau(drapeau) {
+    this._drapeau = drapeau;
   }
 
-  get_drapeau() {
-    return this.drapeau;
+  get drapeau() {
+    return this._drapeau;
   }
 
-  set_nom(nom) {
-    this.nom = nom;
+  set nom(nom) {
+    this._nom = nom;
   }
 
-  get_nom() {
-    return this.nom;
+  get nom() {
+    return this._nom;
   }
 
-  set_population(population) {
-    this.population = population;
+  set population(population) {
+    this._population = population;
   }
 
-  get_population() {
-    return this.population;
+  get population() {
+    return this._population;
   }
 
-  set_topLevelDomains(topLevelDomains) {
-    this.topLevelDomains = topLevelDomains;
+  set topLevelDomains(topLevelDomains) {
+    this._topLevelDomains = topLevelDomains;
   }
 
-  get_topLevelDomains() {
-    return this.topLevelDomains;
+  get topLevelDomains() {
+    return this._topLevelDomains;
   }
 
-  set_monnaies(monnaies) {
-    this.monnaies = monnaies;
+  set monnaies(monnaies) {
+    this._monnaies = monnaies;
   }
 
-  get_monnaies() {
-    return this.monnaies;
+  get monnaies() {
+    return this._monnaies;
   }
 
-  set_langues(langues) {
-    this.langues = langues;
+  set langues(langues) {
+    this._langues = langues;
   }
 
-  get_langues() {
-    return this.langues;
+  get langues() {
+    return this._langues;
   }
 }
 

@@ -9,15 +9,13 @@ function outsideTheContinent() {
         let countrie = all_countries[codeAlpha3];
         let continent = countrie.continent;
         let borders = countrie.getBorders();
-        console.log(countrie);
-        console.log(borders);
-        
         for (const borderCountrie of borders) {
-            //console.log(borderCountrie);
             if(borderCountrie.continent != continent){
-                //console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+                console.log(`${borderCountrie.nom} (${borderCountrie.continent}) est  frontalié avec ${countrie.nom} (${continent})`);
+
+                
             }
-            //console.log(borderCountrie.continent);
+            
         }
         
     }

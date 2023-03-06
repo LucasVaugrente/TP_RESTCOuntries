@@ -13,9 +13,7 @@ function outsideTheContinent() {
             if(borderCountrie.continent != continent){
                 console.log(`${borderCountrie.nom} (${borderCountrie.continent}) est  frontalié avec ${countrie.nom} (${continent})`);
             }
-            
         }
-        
     }
 }
 outsideTheContinent();

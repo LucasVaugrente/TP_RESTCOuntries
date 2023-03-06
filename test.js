@@ -5,11 +5,8 @@
  * Pays dont au moins un pays frontalier n’est pas dans le même continent
  */
 function outsideTheContinent() {
-    
-    
-
-    for (const countries in all_countries) {
-        console.log(countries.getPopDensity());
+    for (let codeAlpha3 in all_countries) {
+        console.log(all_countries[codeAlpha3].getBorders());
     }
 }
 

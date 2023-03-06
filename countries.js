@@ -15213,7 +15213,7 @@ function fill_db() {
                     let cpt = 0;
                     // Boucle qui vérifie la monnaie existe déjà dans all_currencies
                     for (let j = 0; j < all_currencies.length; j++) {
-                        console.log(all_currencies[j].get_currency());
+                        // console.log(all_currencies[j].get_currency());
                         if(all_currencies[j].get_currency() === value.currencies[i].code) {
                             break;
                         }
@@ -15243,4 +15243,4 @@ function fill_db() {
 
 fill_db();
 
-console.log(all_currencies);
+// console.log(all_currencies);

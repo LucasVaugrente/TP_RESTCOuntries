@@ -5,7 +5,12 @@
  * Pays dont au moins un pays frontalier n’est pas dans le même continent
  */
 function outsideTheContinent() {
-    document.getElementsByTagName("body").innerHTML("all_countries");
+    
+    
+
+    for (const countries in all_countries) {
+        console.log(countries);
+    }
 }
 
 // Question 2
@@ -31,4 +36,6 @@ function moreTopLevelDomains() {}
 
 // Question 9
 function veryLongTrip(nom_pays) {}
+
+
 outsideTheContinent();

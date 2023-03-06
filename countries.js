@@ -14744,7 +14744,7 @@ class Country {
 
   // -------------------- METHODS --------------------
   add_country() {
-    all_countries[this.get_codeAlpha3()] = this;
+    all_countries[this.codeAlpha3] = this;
   }
 
   getPopDensity() {
@@ -14753,7 +14753,7 @@ class Country {
 
   getBorders() {
     let bordersObject = [];
-    for (const value in this.paysFrontaliers) {
+    for (const value of this._paysFrontaliers) {
       bordersObject.push(all_countries[value]);
     }
     return bordersObject;

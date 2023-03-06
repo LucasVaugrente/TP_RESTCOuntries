@@ -1,6 +1,6 @@
 // Question 1
 
-console.log(all_countries['CHN'])
+console.log(all_countries['CHN']);
 /**
  * Pays dont au moins un pays frontalier n’est pas dans le même continent
  */

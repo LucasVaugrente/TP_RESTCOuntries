@@ -14,7 +14,16 @@ function outsideTheContinent() {
 }
 
 // Question 2
-function moreNeighbors() {}
+/**
+ * Pays (possibilité de plusieurs) ayant le plus grand nombre de
+voisins. Achez aussi les voisins
+ */
+function moreNeighbors() {
+    let max = 0;
+    for (const country in all_countries) {
+        console.log(all_countries[country].getBorders());
+    }
+}
 
 // Question 3
 function neighborless() {}
@@ -38,4 +47,4 @@ function moreTopLevelDomains() {}
 function veryLongTrip(nom_pays) {}
 
 
-outsideTheContinent();
+moreNeighbors();

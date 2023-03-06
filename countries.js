@@ -14753,8 +14753,10 @@ class Country {
 
   getBorders() {
     let bordersObject = [];
-    for (const value of this._paysFrontaliers) {
-      bordersObject.push(all_countries[value]);
+    if(this._paysFrontaliers != null){
+      for (const value of this._paysFrontaliers) {
+        bordersObject.push(all_countries[value]);
+      }
     }
     return bordersObject;
   }

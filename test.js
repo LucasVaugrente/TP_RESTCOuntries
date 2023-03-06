@@ -13,35 +13,60 @@ function outsideTheContinent() {
 // Question 2
 /**
  * Pays (possibilité de plusieurs) ayant le plus grand nombre de
-voisins. Achez aussi les voisins
+voisins.
  */
 function moreNeighbors() {
     let max = 0;
+    let voisins = [];
+    let res = null;
     for (const country in all_countries) {
-        console.log(all_countries[country].getBorders());
+        if (all_countries[country].paysFrontaliers != null) {
+            if (all_countries[country].getBorders().length > max) {
+                max = all_countries[country].getBorders().length;
+                voisins = [];
+                res = all_countries[country];
+                for (let i = 0; i < max; i++) {
+                    voisins.push(all_countries[country].getBorders()[i]);
+                }
+            }
+        }
     }
+    console.log("Pays ayant le plus de voisins -> " + res.toString());
+    return voisins;
 }
 
 // Question 3
-function neighborless() {}
+/**
+ *  Pays n’ayant aucun voisin.
+ */
+function neighborless() {
+    let res = [];
+    for (const country in all_countries) {
+        if (all_countries[country].paysFrontaliers == null) {
+            res.push(all_countries[country]);
+        }
+    }
+    return res;
+}
 
 // Question 4
-function moreLanguages() {}
+function moreLanguages() { }
 
 // Question 5
-function withCommonLanguage() {}
+function withCommonLanguage() { }
 
 // Question 6
-function withoutCommonCurrency() {}
+function withoutCommonCurrency() { }
 
 // Question 7
-function sortingDecreasingDensity() {}
+function sortingDecreasingDensity() { }
 
 // Question 8
-function moreTopLevelDomains() {}
+function moreTopLevelDomains() { }
 
 // Question 9
-function veryLongTrip(nom_pays) {}
+function veryLongTrip(nom_pays) { }
 
 
-moreNeighbors();
+console.log("Voisins du pays -> { " + moreNeighbors() + " }");
+// console.log("Pays n’ayant aucun voisin : \n" + neighborless());

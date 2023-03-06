@@ -9,7 +9,7 @@ function outsideTheContinent() {
     
 
     for (const countries in all_countries) {
-        console.log(countries);
+        console.log(countries.getPopDensity());
     }
 }
 

@@ -1,7 +1,6 @@
-// Question 1
 
-console.log(all_countries['CHN']);
-/**
+/** Question 1
+ * 
  * Pays dont au moins un pays frontalier n’est pas dans le même continent
  */
 function outsideTheContinent() {
@@ -16,11 +15,12 @@ function outsideTheContinent() {
         }
     }
 }
-outsideTheContinent();
-// Question 2
-/**
- * Pays (possibilité de plusieurs) ayant le plus grand nombre de
-voisins. Achez aussi les voisins
+// outsideTheContinent();
+
+
+/**Question 2
+ * 
+ * Pays (possibilité de plusieurs) ayant le plus grand nombre de voisins. Achez aussi les voisins
  */
 function moreNeighbors() {
     let max = 0;

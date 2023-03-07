@@ -44,10 +44,12 @@ function moreNeighbors() {
         console.log("   " + voisins[i].toString());        
     }
 }
-
 // moreNeighbors();
 
-// Question 3
+/** Question 3
+ * 
+ * Pays n’ayant aucun voisin.
+ */
 function neighborless() {
     let res = [];
     for (const country in all_countries) {
@@ -60,9 +62,7 @@ function neighborless() {
         console.log("   " + res[i].toString());
     }
 }
-
 // neighborless();
-
 
 /** Question 4
  * 
@@ -75,8 +75,12 @@ function moreLanguages() {
         console.log(langues);
     }
 }
-moreLanguages();
-// Question 5
+// moreLanguages();
+
+/** Question 5
+ * Pays ayant au moins un voisin parlant l’une de ses
+langues. Achez aussi les pays voisins et les langues en question.
+ */
 function withCommonLanguage() {}
 
 // Question 6

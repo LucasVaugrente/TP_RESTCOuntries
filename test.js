@@ -114,7 +114,7 @@ function withCommonLanguage() {
             for (const Borderlangues of languagesBorderCountrie) {
                 for (const langues of languagesCountrie) {
                     if(langues.iso639_2 == Borderlangues.iso639_2){
-                        if(listeCountrieWithCommonLanguage.indexOf([borderCountrie,countrie])!=-1 && listeCountrieWithCommonLanguage.indexOf([countrie,borderCountrie])!=-1){
+                        if(listeCountrieWithCommonLanguage.indexOf([borderCountrie,countrie])== -1 && listeCountrieWithCommonLanguage.indexOf([countrie,borderCountrie])== -1){
                             listeCountrieWithCommonLanguage.push([borderCountrie,countrie]);
                         }
                     } 
@@ -122,15 +122,22 @@ function withCommonLanguage() {
             }
         }
     }
-
-    for (const iterator of object) {
-        
+    
+    for (const countrieWithCommonLanguage of listeCountrieWithCommonLanguage){
+        let listeCommonLanguage = [];
+        for (const langue1 of countrieWithCommonLanguage[0].langues) {
+            for (const langues2 of countrieWithCommonLanguage[1].langues) {
+                if(langue1.iso639_2 == langues2.iso639_2){
+                    listeCommonLanguage.push(langue1.name);
+                }
+            }
+        }
+        console.log(`"${countrieWithCommonLanguage[0].nom}" et "${countrieWithCommonLanguage[1].nom}" sont voisins et parlent en commun ${listeCommonLanguage}`);
+        console.log(" ");
+        console.log("--------------------------------");
+        console.log(" ");
     }
-    console.log(`${borderCountrie.nom} et ${countrie.nom} sont voisins et parlent `);
-    console.log(" ");
-    console.log("--------------------------------");
-    console.log(" ");
-    console.log(listeCountrieWithCommonLanguage);
+
 }
 withCommonLanguage();
 // Question 6

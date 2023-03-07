@@ -189,6 +189,7 @@ function withoutCommonCurrency() {
 }
 //withoutCommonCurrency();
 
+
 // Question 7
 function sortingDecreasingDensity() {}
 

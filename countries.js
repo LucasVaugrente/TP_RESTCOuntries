@@ -14926,10 +14926,6 @@ function deleteUndefinedCountries(){
           borderCountrie.paysFrontaliers = borderCountrie.paysFrontaliers.filter(border => border != borderCountrie.paysFrontaliers[index]);
         }
       }
-      
-  
-      
-      
     }
     
   }

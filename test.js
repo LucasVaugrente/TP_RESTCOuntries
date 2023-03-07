@@ -63,9 +63,19 @@ function neighborless() {
 
 // neighborless();
 
-// Question 4
-function moreLanguages() {}
 
+/** Question 4
+ * 
+ * Pays (possibilité de plusieurs) parlant le plus de langues.  Affichez aussi les langues.
+ **/ 
+function moreLanguages() {
+    for (let codeAlpha3 in all_countries) {
+        let countrie = all_countries[codeAlpha3];
+        let langues = countrie.langues;
+        console.log(langues);
+    }
+}
+moreLanguages();
 // Question 5
 function withCommonLanguage() {}
 

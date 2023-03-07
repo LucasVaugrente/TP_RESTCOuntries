@@ -14988,7 +14988,7 @@ function fill_db() {
           let cpt = 0;
           // Boucle qui vérifie la monnaie existe déjà dans all_currencies
           for (let j = 0; j < all_currencies.length; j++) {
-            if (all_currencies[j].get_currency() === value.currencies[i].code) {
+            if (all_currencies[j].currency === value.currencies[i].code) {
               break;
             }
             cpt++;

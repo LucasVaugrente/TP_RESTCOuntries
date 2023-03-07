@@ -71,15 +71,19 @@ function neighborless() {
 function moreLanguages() {
     for (let codeAlpha3 in all_countries) {
         let countrie = all_countries[codeAlpha3];
-        let langues = countrie.langues;
+        let languagesCountrie = countrie.langues;
+        if(languagesCountrie)
         console.log(countrie);
-        console.log(langues);
+        for (const language of languagesCountrie) {
+            console.log(language.name);
+        }
+        
         console.log("");
         console.log("------");
         console.log("");
     }
 }
-// moreLanguages();
+moreLanguages();
 
 /** Question 5
  * Pays ayant au moins un voisin parlant l’une de ses

@@ -14866,13 +14866,15 @@ class Country {
 /* ########################################### CLASSE CURRENCY ########################################### */
 class Currency {
   // Constructor
-  constructor(currency) {
-    this._currency = currency;
+  constructor(code,nom,symbole) {
+    this._code = code;
+    this._nom = nom;
+    this._symbole = symbole;
   }
 
   // Methods
   toString() {
-    return "Monnaie du pays : " + this._currency;
+    return "Monnaie du pays : " + this._nom;
   }
 
   addCurrency() {
@@ -14880,12 +14882,28 @@ class Currency {
   }
 
   // Methods GETTER & SETTER
-  set currency(currency) {
-    this._currency = currency;
+  set code(code) {
+    this._code = code;
   }
 
-  get currency() {
-    return this._currency;
+  get code() {
+    return this._code;
+  }
+
+  set nom(nom) {
+    this._nom = nom;
+  }
+
+  get nom() {
+    return this._nom;
+  }
+
+  set symbole(symbole) {
+    this._symbole = symbole;
+  }
+
+  get symbole() {
+    return this._symbole;
   }
 }
 
@@ -14993,10 +15011,11 @@ function fill_db() {
             }
             cpt++;
           }
+          let monnaie = new Currency(value.currencies[i].code, value.currencies[i].name, value.currencies[i].symbol);
+          tab_monnaies.push(monnaie);
+
           // Si on n'a pas trouvé la monnaie dans all_currencies
           if (cpt == all_currencies.length) {
-            let monnaie = new Currency(value.currencies[i].code);
-            tab_monnaies.push(monnaie);
             monnaie.addCurrency();
           }
         }

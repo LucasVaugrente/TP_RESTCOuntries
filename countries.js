@@ -14761,7 +14761,7 @@ class Country {
     return bordersObject;
   }
 
-  getCurencies() {
+  getCurrencies() {
     return this._monnaies;
   }
 

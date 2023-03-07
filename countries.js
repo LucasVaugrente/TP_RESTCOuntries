@@ -14892,13 +14892,14 @@ class Currency {
 /* ########################################### CLASSE LANGUAGE ########################################### */
 class Language {
   // Constructeur
-  constructor(language) {
-    this._language = language;
+  constructor(iso639_2,name) {
+    this._iso639_2 = iso639_2;
+    this._name = name;
   }
 
   // Methods
   toString() {
-    return "Langues du pays : " + this._language;
+    return "Langues du pays : " + this._name;
   }
 
   addLanguage() {
@@ -14906,12 +14907,20 @@ class Language {
   }
 
   // Methods GETTER & SETTER
-  set_language(language) {
-    this._language = language;
+  set iso639_2(iso639_2) {
+    this._iso639_2 = iso639_2;
   }
 
-  get_language() {
-    return this._language;
+  get iso639_2() {
+    return this._iso639_2;
+  }
+
+  set name(name) {
+    this._name = name;
+  }
+
+  get name() {
+    return this._name;
   }
 }
 
@@ -15001,24 +15010,27 @@ function fill_db() {
     // S'il existe le champ "languages" dans le pays
     if (value.hasOwnProperty("languages")) {
       // S'il a au moins 1 dans languages
+      
       if (value.languages.length >= 1) {
         for (let i = 0; i < value.languages.length; i++) {
+          
           let cpt = 0;
           // Boucle qui vérifie la langue existe déjà dans all_languages
           for (let j = 0; j < all_languages.length; j++) {
-            if (
-              all_languages[j].get_language() === value.languages[i].iso639_2
-            ) {
+            if(all_languages[j].iso639_2 === value.languages[i].iso639_2) {
               break;
             }
             cpt++;
           }
+          
+          let langue = new Language(value.languages[i].iso639_2,value.languages[i].name);
+          tab_langues.push(langue);
+
           // Si on n'a pas trouvé la langue dans all_languages
           if (cpt == all_languages.length) {
-            let langue = new Language(value.languages[i].iso639_2);
-            tab_langues.push(langue);
             langue.addLanguage();
           }
+
         }
       }
     } else {
@@ -15044,9 +15056,11 @@ function fill_db() {
 
     return;
   });
-
+  
   return;
 }
+
+
 
 
 

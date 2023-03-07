@@ -41,7 +41,11 @@ function moreLanguages() {
     for (let codeAlpha3 in all_countries) {
         let countrie = all_countries[codeAlpha3];
         let langues = countrie.langues;
+        console.log(countrie);
         console.log(langues);
+        console.log("");
+        console.log("------");
+        console.log("");
     }
 }
 moreLanguages();

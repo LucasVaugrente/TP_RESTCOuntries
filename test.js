@@ -98,12 +98,13 @@ function moreLanguages() {
         console.log("");
     }
 }
-moreLanguages();
+//moreLanguages();
 
 /** Question 5
  * Pays ayant au moins un voisin parlant l’une de ses langues. Affichez aussi les pays voisins et les langues en question.
  */
 function withCommonLanguage() {
+    let listeCountrieWithCommonLanguage = [];
     for (let codeAlpha3 in all_countries) {
         let countrie = all_countries[codeAlpha3];
         let languagesCountrie = countrie.langues;
@@ -112,23 +113,26 @@ function withCommonLanguage() {
             let languagesBorderCountrie = borderCountrie.langues;
             for (const Borderlangues of languagesBorderCountrie) {
                 for (const langues of languagesCountrie) {
-                    
+                    if(langues.iso639_2 == Borderlangues.iso639_2){
+                        if(listeCountrieWithCommonLanguage.indexOf([borderCountrie,countrie])!=-1 && listeCountrieWithCommonLanguage.indexOf([countrie,borderCountrie])!=-1){
+                            listeCountrieWithCommonLanguage.push([borderCountrie,countrie]);
+                        }
+                    } 
                 }
-    
             }
-        }
-        if(languagesCountrie.length >1){
-            console.log(`${countrie.nom} parle les langues suivantes : `);
-            for (const language of languagesCountrie) {
-                console.log(`- ${language.name} (${language.iso639_2})`);
-            }
-            console.log("");
-            console.log("------");
-            console.log("");
         }
     }
-}
 
+    for (const iterator of object) {
+        
+    }
+    console.log(`${borderCountrie.nom} et ${countrie.nom} sont voisins et parlent `);
+    console.log(" ");
+    console.log("--------------------------------");
+    console.log(" ");
+    console.log(listeCountrieWithCommonLanguage);
+}
+withCommonLanguage();
 // Question 6
 function withoutCommonCurrency() {}
 

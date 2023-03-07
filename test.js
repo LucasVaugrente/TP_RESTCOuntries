@@ -32,8 +32,14 @@ function moreNeighbors() {
 // Question 3
 function neighborless() {}
 
-// Question 4
-function moreLanguages() {}
+
+/** Question 4
+ * 
+ * Pays (possibilité de plusieurs) parlant le plus de langues.  Affichez aussi les langues.
+ **/ 
+function moreLanguages() {
+
+}
 
 // Question 5
 function withCommonLanguage() {}

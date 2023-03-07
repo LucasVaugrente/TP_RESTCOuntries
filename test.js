@@ -69,11 +69,54 @@ function neighborless() {
  * Pays (possibilité de plusieurs) parlant le plus de langues.  Affichez aussi les langues.
  **/ 
 function moreLanguages() {
-    console.log("LISTE DES PAYS PARLANT PLUSIEURS LANGUES : ");
-    console.log("");
+    let listCountrieMoreLanguages= [];
+    
     for (let codeAlpha3 in all_countries) {
         let countrie = all_countries[codeAlpha3];
         let languagesCountrie = countrie.langues;
+        if(listCountrieMoreLanguages.length < 1){
+            listCountrieMoreLanguages.push(countrie);
+        }else{
+            if(listCountrieMoreLanguages[0].langues.length == languagesCountrie.length){
+                listCountrieMoreLanguages.push(countrie);
+            }else{
+                if(listCountrieMoreLanguages[0].langues.length < languagesCountrie.length){
+                    listCountrieMoreLanguages = [countrie];
+                }
+            }
+        }
+    }
+
+    // AFFICHAGE
+    for (const countrieMoreLanguages of listCountrieMoreLanguages) {
+        console.log(`${countrieMoreLanguages.nom} possède ${countrieMoreLanguages.langues.length} langues différentes: `);
+        for (const language of countrieMoreLanguages.langues) {
+            console.log(`- ${language.name} (${language.iso639_2})`);
+        }
+        console.log("");
+        console.log("------");
+        console.log("");
+    }
+}
+moreLanguages();
+
+/** Question 5
+ * Pays ayant au moins un voisin parlant l’une de ses langues. Affichez aussi les pays voisins et les langues en question.
+ */
+function withCommonLanguage() {
+    for (let codeAlpha3 in all_countries) {
+        let countrie = all_countries[codeAlpha3];
+        let languagesCountrie = countrie.langues;
+        let borders = countrie.getBorders();
+        for (const borderCountrie of borders) {
+            let languagesBorderCountrie = borderCountrie.langues;
+            for (const Borderlangues of languagesBorderCountrie) {
+                for (const langues of languagesCountrie) {
+                    
+                }
+    
+            }
+        }
         if(languagesCountrie.length >1){
             console.log(`${countrie.nom} parle les langues suivantes : `);
             for (const language of languagesCountrie) {
@@ -85,13 +128,6 @@ function moreLanguages() {
         }
     }
 }
-moreLanguages();
-
-/** Question 5
- * Pays ayant au moins un voisin parlant l’une de ses
-langues. Achez aussi les pays voisins et les langues en question.
- */
-function withCommonLanguage() {}
 
 // Question 6
 function withoutCommonCurrency() {}

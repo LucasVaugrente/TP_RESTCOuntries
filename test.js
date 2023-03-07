@@ -157,7 +157,6 @@ function withoutCommonCurrency() {
 
         let doublon = false;
         let pays_v = all_countries[country].paysFrontaliers;
-        console.log(pays_v);
         
         // On étudie que les pays qui ont des voisins
         if (all_countries[country].getBorders().length !== 0) {
@@ -183,10 +182,11 @@ function withoutCommonCurrency() {
         }
         if (!doublon) {
             res.push(all_countries[country]);
-            console.log("Ajouté !!!!!!");
         }
     }
-    console.log(res);
+    for (let i = 0; i < res.length; i++) {
+        console.log(res[i].toString());        
+    }
 }
 withoutCommonCurrency();
 

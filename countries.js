@@ -14761,9 +14761,13 @@ class Country {
     return bordersObject;
   }
 
-  getCurencies() { }
+  getCurencies() {
+    return this._monnaies;
+  }
 
-  getLanguages() { }
+  getLanguages() {
+    return this._langues;
+  }
 
   // -------------------- GETTER & SETTER --------------------
   set codeAlpha3(codeAlpha3) {

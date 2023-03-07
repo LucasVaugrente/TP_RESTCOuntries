@@ -69,18 +69,20 @@ function neighborless() {
  * Pays (possibilité de plusieurs) parlant le plus de langues.  Affichez aussi les langues.
  **/ 
 function moreLanguages() {
+    console.log("LISTE DES PAYS PARLANT PLUSIEURS LANGUES : ");
+    console.log("");
     for (let codeAlpha3 in all_countries) {
         let countrie = all_countries[codeAlpha3];
         let languagesCountrie = countrie.langues;
-        if(languagesCountrie)
-        console.log(countrie);
-        for (const language of languagesCountrie) {
-            console.log(language.name);
+        if(languagesCountrie.length >1){
+            console.log(`${countrie.nom} parle les langues suivantes : `);
+            for (const language of languagesCountrie) {
+                console.log(`- ${language.name} (${language.iso639_2})`);
+            }
+            console.log("");
+            console.log("------");
+            console.log("");
         }
-        
-        console.log("");
-        console.log("------");
-        console.log("");
     }
 }
 moreLanguages();

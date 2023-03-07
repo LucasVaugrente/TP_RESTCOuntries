@@ -86,10 +86,6 @@ function moreLanguages() {
                 }
             }
         }
-
-        console.log("");
-        console.log("------");
-        console.log("");
     }
 
     // AFFICHAGE
@@ -144,6 +140,9 @@ function withCommonLanguage() {
     }
 
 }
+//withCommonLanguage();
+
+
 /** Question 6
  *
  * Pays sans aucun voisin ayant au moins une de ses
@@ -188,7 +187,7 @@ function withoutCommonCurrency() {
     }
     console.log(res);
 }
-withoutCommonCurrency();
+//withoutCommonCurrency();
 
 // Question 7
 function sortingDecreasingDensity() {}

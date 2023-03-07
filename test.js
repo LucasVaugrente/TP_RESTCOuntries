@@ -1,6 +1,6 @@
 
 /** Question 1
- * 
+ *
  * Pays dont au moins un pays frontalier n’est pas dans le même continent
  */
 function outsideTheContinent() {
@@ -19,7 +19,7 @@ function outsideTheContinent() {
 
 
 /**Question 2
- * 
+ *
  * Pays (possibilité de plusieurs) ayant le plus grand nombre de voisins. Achez aussi les voisins
  */
 function moreNeighbors() {
@@ -41,13 +41,13 @@ function moreNeighbors() {
     console.log("Pays ayant le plus de voisins -> " + res.toString());
     console.log("Ses voisins : ");
     for (let i = 0; i < voisins.length; i++) {
-        console.log("   " + voisins[i].toString());        
+        console.log("   " + voisins[i].toString());
     }
 }
 // moreNeighbors();
 
 /** Question 3
- * 
+ *
  * Pays n’ayant aucun voisin.
  */
 function neighborless() {
@@ -61,13 +61,14 @@ function neighborless() {
     for (let i = 0; i < res.length; i++) {
         console.log("   " + res[i].toString());
     }
+    return res;
 }
 // neighborless();
 
 /** Question 4
- * 
+ *
  * Pays (possibilité de plusieurs) parlant le plus de langues.  Affichez aussi les langues.
- **/ 
+ **/
 function moreLanguages() {
     let listCountrieMoreLanguages= [];
     
@@ -85,6 +86,10 @@ function moreLanguages() {
                 }
             }
         }
+
+        console.log("");
+        console.log("------");
+        console.log("");
     }
 
     // AFFICHAGE
@@ -139,9 +144,51 @@ function withCommonLanguage() {
     }
 
 }
-withCommonLanguage();
-// Question 6
-function withoutCommonCurrency() {}
+/** Question 6
+ *
+ * Pays sans aucun voisin ayant au moins une de ses
+monnaies.
+ */
+function withoutCommonCurrency() {
+    let res = [];
+    let cpt = 0;
+
+    for (const country in all_countries) {
+
+        let doublon = false;
+        let pays_v = all_countries[country].paysFrontaliers;
+        console.log(pays_v);
+        
+        // On étudie que les pays qui ont des voisins
+        if (all_countries[country].getBorders().length !== 0) {
+            cpt++;
+
+            // Pour tous les pays voisins de country
+            for (let i = 0; i < all_countries[country].paysFrontaliers.length; i++) {
+
+                // console.log(all_countries[pays_v[i]]);
+                // Pour toutes les monnaies du pays voisins
+                for (let j = 0; j < all_countries[country].monnaies.length; j++) {
+
+                    // Pour toutes les monnaies du pays qu'on étudie
+                    for (let k = 0; k < all_countries[pays_v[i]].getCurrencies().length; k++) {
+
+                        // Si les 2 monnaies sont identiques, on signale qu'il y a un doublon détecté
+                        if ((all_countries[pays_v[i]].getCurrencies()[k].code == all_countries[country].monnaies[j].code) ) {
+                            doublon = true;
+                        }
+                    }
+                }
+            }
+        }
+        if (!doublon) {
+            res.push(all_countries[country]);
+            console.log("Ajouté !!!!!!");
+        }
+    }
+    console.log(res);
+}
+withoutCommonCurrency();
 
 // Question 7
 function sortingDecreasingDensity() {}

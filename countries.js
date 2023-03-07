@@ -14880,11 +14880,11 @@ class Currency {
   }
 
   // Methods GETTER & SETTER
-  set_currency(currency) {
+  set currency(currency) {
     this._currency = currency;
   }
 
-  get_currency() {
+  get currency() {
     return this._currency;
   }
 }

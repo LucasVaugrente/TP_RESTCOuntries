@@ -150,7 +150,6 @@ monnaies.
  */
 function withoutCommonCurrency() {
     let res = [];
-    let cpt = 0;
 
     for (const country in all_countries) {
 
@@ -159,7 +158,6 @@ function withoutCommonCurrency() {
         
         // On étudie que les pays qui ont des voisins
         if (all_countries[country].getBorders().length !== 0) {
-            cpt++;
 
             // Pour tous les pays voisins de country
             for (let i = 0; i < all_countries[country].paysFrontaliers.length; i++) {
@@ -191,10 +189,49 @@ function withoutCommonCurrency() {
 
 
 // Question 7
-function sortingDecreasingDensity() {}
+/**
+ * Pays triés par ordre décroissant de densité de
+population.
+ */
+function sortingDecreasingDensity() {
+
+    // res = all_countries;
+    // res2 = [];
+
+    // let cpt = 0;
+    // for (const country in res) {
+    //     cpt++;
+    // }
+
+    // for (let i = 0; i < cpt; i++) {
+    //     let country_max = null;
+    //     for (const country in res) {
+    //         let max = 0;
+    //         // console.log(res[country].getPopDensity());
+    //         if (res[country].getPopDensity() > max) {
+    //             country_max = res[country];
+    //             max = res[country].getPopDensity();
+    //         }
+    //     }
+    //     console.log(country_max.getPopDensity());
+    //     res2.push(res[country_max]);
+    //     res.splice(res[country_max], null, null);
+    // }
+
+    // console.log(res2);
+
+}
+// sortingDecreasingDensity();
 
 // Question 8
-function moreTopLevelDomains() {}
+function moreTopLevelDomains() {
+    for (const country in all_countries) {
+        if (all_countries[country]._topLevelDomains.length > 1) {
+            console.log(all_countries[country]);
+        } 
+    }
+}
+moreTopLevelDomains();
 
 // Question 9
 function veryLongTrip(nom_pays) {}

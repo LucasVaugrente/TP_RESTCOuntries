@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pays TP REST Countries</title>
+    <style>
+        body {
+            margin: 10%;
+            background-color: #353740;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-bottom: 20px;
+            font-family: sans-serif;
+            box-shadow: 0 3px 5px black;
+        }
+
+        th,
+        td {
+            text-align: left;
+            padding: 1em;
+        }
+
+        th {
+            background-color: #202123;
+            font-weight: bold;
+            color: rgb(196, 196, 196);
+        }
+
+        td {
+            background-color: #8a8b91;
+            height: max-content;
+            width: max-content;
+            border: solid 1px #353740;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+
+<body>
+    <table>
+        <thead>
+            <tr>
+                <th>Pays</th>
+                <th>Nom</th>
+                <th>Population</th>
+                <th>Surface</th>
+                <th>Densité (Population)</th>
+                <th>Continent</th>
+                <th>Drapeau</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="template">
+                <td class="num"></td>
+                <td class="nom"></td>
+                <td class="pop"></td>
+                <td class="surface"><sup>2</sup></td>
+                <td class="densite"></td>
+                <td class="continent"></td>
+                <td class="url"><img src="" alt="Drapeau Pays" title="Drapeau"></td>
+            </tr>
+        </tbody>
+    </table>
+
+</body>
+
+<script src="countries.js"></script>
+<script>
+
+    const tbody = document.querySelector('tbody');
+
+    let cpt = 1;
+
+    let num = document.querySelector(".num");
+    let nom = document.querySelector(".nom");
+    let pop = document.querySelector(".pop");
+    let surface = document.querySelector(".surface");
+    let densite = document.querySelector(".densite");
+    let continent = document.querySelector(".continent");
+    let url = document.querySelector(".url img");
+
+    for (const country in all_countries) {
+
+        let tr = document.createElement("tr");
+        tr.classList.add("template")
+        num.innerHTML = "Numéro " + cpt;
+        tr.appendChild(num);
+
+        nom.innerHTML = all_countries[country]._nom;
+        tr.appendChild(nom);
+
+        pop.innerHTML = all_countries[country]._population;
+        tr.appendChild(pop);
+
+        surface.innerHTML = all_countries[country]._superficie;
+        tr.appendChild(surface);
+
+        densite.innerHTML = all_countries[country].getPopDensity();
+        tr.appendChild(densite);
+
+        continent.innerHTML = all_countries[country].getBorders();
+        tr.appendChild(continent);
+
+        url.src = all_countries[country]._image;
+        tr.appendChild(url);
+
+        tbody.appendChild(tr);
+        cpt++;
+    }
+
+
+</script>
+
+</html>

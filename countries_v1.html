@@ -8,8 +8,15 @@
     <title>Pays TP REST Countries</title>
     <style>
         body {
-            margin: 10%;
+            margin: 5% 10%;
             background-color: #141b33;
+        }
+
+        h1 {
+            font-family: sans-serif;
+            color: white;
+            text-align: center;
+            text-transform: uppercase;
         }
 
         tbody {
@@ -17,14 +24,19 @@
         }
 
         table {
-            border-collapse: collapse;
             width: 100%;
+            height: max-content;
             margin-bottom: 20px;
             font-family: sans-serif;
             box-shadow: 0 3px 5px black;
             border-collapse: collapse;
             border-radius: 1em;
-            overflow: hidden;
+        }
+
+        thead {
+            position: sticky;
+            top: -1px;
+            z-index: 2;
         }
 
         th,
@@ -50,10 +62,22 @@
         tr:nth-child(even) {
             background-color: #f2f2f2;
         }
+
+        .url {
+            display: flex;
+            justify-content: center;
+        }
+
+        img {
+            width: 150px;
+            display: flex;
+            justify-content: center;
+        }
     </style>
 </head>
 
 <body>
+    <h1>TP Rest Countries Partie 2</h1>
     <table>
         <thead>
             <tr>
@@ -67,15 +91,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr class="template">
-                <td class="num"></td>
-                <td class="nom"></td>
-                <td class="pop"></td>
-                <td class="surface"><sup>2</sup></td>
-                <td class="densite"></td>
-                <td class="continent"></td>
-                <td class="url"><img src="" alt="Drapeau Pays" title="Drapeau"></td>
-            </tr>
+            -->
         </tbody>
     </table>
 
@@ -88,19 +104,29 @@
 
     let cpt = 1;
 
-    let num = document.querySelector(".num");
-    let nom = document.querySelector(".nom");
-    let pop = document.querySelector(".pop");
-    let surface = document.querySelector(".surface");
-    let densite = document.querySelector(".densite");
-    let continent = document.querySelector(".continent");
-    let url = document.querySelector(".url img");
+    for (const country in all_countries) {
+        if (all_countries[country].getPopDensity() == Infinity) {
+            console.log(all_countries[country]);
+        }
+    }
 
     for (const country in all_countries) {
 
+        let num = document.createElement("td");
+        let nom = document.createElement("td");
+        let pop = document.createElement("td");
+        let surface = document.createElement("td");
+        let densite = document.createElement("td");
+        let continent = document.createElement("td");
+        let url = document.createElement("td");
+        let image = document.createElement("img");
+
+        url.appendChild(image);
+        url.classList.add("url");
+
         let tr = document.createElement("tr");
         tr.classList.add("template")
-        num.innerHTML = "Numéro " + cpt;
+        num.innerHTML = cpt;
         tr.appendChild(num);
 
         nom.innerHTML = all_countries[country]._nom;
@@ -109,16 +135,28 @@
         pop.innerHTML = all_countries[country]._population;
         tr.appendChild(pop);
 
-        surface.innerHTML = all_countries[country]._superficie;
-        tr.appendChild(surface);
+        if (all_countries[country]._superficie != null) {
+            surface.innerHTML = all_countries[country]._superficie + " km<sup>2</sup>";
+            tr.appendChild(surface);
+        } else {
+            surface.innerHTML = "Indisponible";
+            tr.appendChild(surface);
+        }
 
-        densite.innerHTML = all_countries[country].getPopDensity();
-        tr.appendChild(densite);
 
-        continent.innerHTML = all_countries[country].getBorders();
+        if (all_countries[country].getPopDensity() != Infinity) {
+            densite.innerHTML = all_countries[country].getPopDensity();
+            tr.appendChild(densite);
+        } else {
+            densite.innerHTML = "Indisponible";
+            tr.appendChild(densite);
+        }
+
+        continent.innerHTML = all_countries[country]._continent;
         tr.appendChild(continent);
 
-        url.src = all_countries[country]._image;
+        image.src = all_countries[country]._drapeau;
+        console.log(all_countries[country]._drapeau);
         tr.appendChild(url);
 
         tbody.appendChild(tr);

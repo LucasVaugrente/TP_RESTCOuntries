@@ -197,4 +197,47 @@ function sortingDecreasingDensity() {}
 function moreTopLevelDomains() {}
 
 // Question 9
-function veryLongTrip(nom_pays) {}
+function veryLongTrip(nom_pays){
+    var LongTrip = new Set();
+    
+    function StartCountrie_search(nom_pays) {
+        var StartCountrie;
+        for (const codeAlpha3 in all_countries) {
+            if(all_countries[codeAlpha3].nom == nom_pays){
+                StartCountrie = all_countries[codeAlpha3];
+                break;
+            }
+        }
+        return StartCountrie;
+    }
+
+    let StartCountrie = StartCountrie_search(nom_pays);
+    for (const BorderCountrie of StartCountrie.getBorders()) {
+        LongTrip.add(BorderCountrie.nom);
+    }
+
+    let i = 0;
+    let CountrieList = LongTrip;
+    let trouve = true;
+    while(trouve){
+        trouve = false;
+        let LongTrip_temp = new Set();
+        for (const Countrie of CountrieList){
+            StartCountrie = StartCountrie_search(Countrie);
+            for (const BorderCountrie of StartCountrie.getBorders()) {
+                if(!LongTrip.has(BorderCountrie.nom)){
+                    LongTrip_temp.add(BorderCountrie.nom);
+                    trouve = true;
+                }
+            }
+        }
+        CountrieList = LongTrip;
+        i++;
+        LongTrip_temp.forEach(LongTrip.add, LongTrip);
+    }
+    console.log(`Liste des pays visitable en partant de ${nom_pays} : (${LongTrip.size} pays)`);
+    for (const Countrie of LongTrip) {
+        console.log(`- ${Countrie}`);
+    }
+}
+veryLongTrip("France");

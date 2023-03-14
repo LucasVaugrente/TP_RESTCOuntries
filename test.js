@@ -219,7 +219,7 @@ function sortingDecreasingDensity() {
     }
 
     cpt = 1;
-    res2.reverse();
+    
     for (const countrie of res2) {
         console.log(`N°${cpt} : ${countrie.nom} (${countrie.getPopDensity()})`);
         cpt++;

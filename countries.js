@@ -20548,6 +20548,9 @@ class Country {
   }
 
   getPopDensity() {
+    if(this._population == null || this._superficie == null){
+      return null;
+    }
     return this._population / this._superficie;
   }
 

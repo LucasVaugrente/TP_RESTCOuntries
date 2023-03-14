@@ -15,7 +15,7 @@ function outsideTheContinent() {
         }
     }
 }
-// outsideTheContinent();
+//outsideTheContinent();
 
 
 /**Question 2
@@ -44,7 +44,7 @@ function moreNeighbors() {
         console.log("   " + voisins[i].toString());
     }
 }
-// moreNeighbors();
+//moreNeighbors();
 
 /** Question 3
  *
@@ -63,7 +63,7 @@ function neighborless() {
     }
     return res;
 }
-// neighborless();
+//neighborless();
 
 /** Question 4
  *
@@ -194,44 +194,53 @@ function withoutCommonCurrency() {
 population.
  */
 function sortingDecreasingDensity() {
+    res = all_countries;
+    res2 = [];
 
-    // res = all_countries;
-    // res2 = [];
+    let cpt = 0;
+    for (const country in res) {
+        cpt++;
+    }
+    
+    for (let i = 0; i < cpt; i++) {
+        let country_max = null;
+        let max = 0;
+        
+        // Recherche du Maximum
+        for (const codeAlpha3 in res) {
+            if (res[codeAlpha3].getPopDensity() > max && !res2.includes(res[codeAlpha3])) {
+                country_max = res[codeAlpha3];
+                max = res[codeAlpha3].getPopDensity();
+            }
+        }
+        if(country_max != null){
+            res2.push(res[country_max.codeAlpha3]);
+        }
+    }
 
-    // let cpt = 0;
-    // for (const country in res) {
-    //     cpt++;
-    // }
-
-    // for (let i = 0; i < cpt; i++) {
-    //     let country_max = null;
-    //     for (const country in res) {
-    //         let max = 0;
-    //         // console.log(res[country].getPopDensity());
-    //         if (res[country].getPopDensity() > max) {
-    //             country_max = res[country];
-    //             max = res[country].getPopDensity();
-    //         }
-    //     }
-    //     console.log(country_max.getPopDensity());
-    //     res2.push(res[country_max]);
-    //     res.splice(res[country_max], null, null);
-    // }
-
-    // console.log(res2);
-
+    cpt = 1;
+    res2.reverse();
+    for (const countrie of res2) {
+        console.log(`N°${cpt} : ${countrie.nom} (${countrie.getPopDensity()})`);
+        cpt++;
+    }
+    
 }
-// sortingDecreasingDensity();
+sortingDecreasingDensity();
 
 // Question 8
 function moreTopLevelDomains() {
     for (const country in all_countries) {
         if (all_countries[country]._topLevelDomains.length > 1) {
-            console.log(all_countries[country]);
+            console.log(`${all_countries[country].nom} possède ${all_countries[country].topLevelDomains.length} Top Level Domains Internet : `);
+            for (const topLevelDomains of all_countries[country].topLevelDomains) {
+                console.log(`${topLevelDomains}`);
+            }
+            console.log("");
         } 
     }
 }
-moreTopLevelDomains();
+//moreTopLevelDomains();
 
 // Question 9
 function veryLongTrip(nom_pays){
@@ -277,4 +286,4 @@ function veryLongTrip(nom_pays){
         console.log(`- ${Countrie}`);
     }
 }
-veryLongTrip("France");
+//veryLongTrip("France");

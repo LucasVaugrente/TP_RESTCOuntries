@@ -49,13 +49,13 @@
             background-color: #20273d;
             font-weight: bold;
             color: rgb(223, 223, 223);
-            border: solid 1px #161d35;
+            border: solid 0 #161d35;
         }
 
         td {
             background-color: #3a4054;
             height: max-content;
-            border: solid 1px #20273d;
+            border: solid 0 #20273d;
             color: rgb(223, 223, 223);
         }
 
@@ -148,6 +148,8 @@
 <script>
 
     const tbody = document.querySelector('tbody');
+    var num = document.querySelector(".num_page");
+    var numeroPage = parseInt(num.innerHTML);
     var indice = 0;
     var num_page = 0;
     var cpt = 1;
@@ -225,20 +227,17 @@
     let page = document.querySelector(".num_page");
 
 
-    function update(indicateur) {
+    function update() {
 
         let ind = indice * num_page;
-
-        console.log("Debut", indice);
-        console.log("Fin", indice + 25);
 
         for (let i = 0; i < templates.length; i++) {
 
             if (i < indice) {
                 templates[i].style.visibility = "collapse";
             }
-            if ((indice < i) && (i < indice + 25)) {
-                templates[i].style.visibility = "visible";
+            if ((indice < i) && (i < indice+26)) {
+                templates[i-1].style.visibility = "visible";
             }
             if (i > indice + 24) {
                 templates[i].style.visibility = "collapse";
@@ -255,7 +254,7 @@
             precedent.style.display = "block";
         }
 
-        if (num_page >= cpt / 25) {
+        if (num_page >= cpt / 26) {
             suivant.style.display = "none";
         } else {
             suivant.style.display = "block";
@@ -265,22 +264,28 @@
     precedent.addEventListener("click", () => {
         num_page -= 1;
         indice -= 25;
-        update("moins");
+        numeroPage -= 1;
+        console.log(numeroPage);
+        num.innerHTML = numeroPage;
+    
+        update();
         afficheBoutons();
     });
 
     suivant.addEventListener("click", () => {
         num_page += 1;
         indice += 25;
-        update("plus");
+        update();
+        numeroPage += 1;
+        console.log(numeroPage);
+        num.innerHTML = numeroPage;
         afficheBoutons();
     });
 
 
     afficherPays(indice);
-    update("plus");
+    update();
     num_page += 1;
-    indice += 25;
     console.log("Page", num_page);
     afficheBoutons();
 

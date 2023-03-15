@@ -128,12 +128,15 @@
         num.innerHTML = cpt;
         tr.appendChild(num);
 
+        // Nom du pays
         nom.innerHTML = all_countries[country]._nom;
         tr.appendChild(nom);
 
+        // Population du pays
         pop.innerHTML = all_countries[country]._population;
         tr.appendChild(pop);
 
+        // Superficie du pays
         if (all_countries[country]._superficie != null) {
             surface.innerHTML = all_countries[country]._superficie + " km<sup>2</sup>";
             tr.appendChild(surface);
@@ -142,7 +145,7 @@
             tr.appendChild(surface);
         }
 
-
+        // Densité du pays
         if (all_countries[country].getPopDensity() != Infinity) {
             densite.innerHTML = all_countries[country].getPopDensity();
             tr.appendChild(densite);
@@ -151,9 +154,11 @@
             tr.appendChild(densite);
         }
 
+        // Continent du pays
         continent.innerHTML = all_countries[country]._continent;
         tr.appendChild(continent);
 
+        // Drapeau du pays
         image.src = all_countries[country]._drapeau;
         console.log(all_countries[country]._drapeau);
         tr.appendChild(url);

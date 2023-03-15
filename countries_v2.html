@@ -149,11 +149,11 @@
 
     const tbody = document.querySelector('tbody');
     var indice = 0;
-    var num_page = 1;
+    var num_page = 0;
     var cpt = 1;
 
     function afficherPays(occur) {
-        
+
         for (const country in all_countries) {
             if (all_countries[country].getPopDensity() == Infinity) {
             }
@@ -229,31 +229,23 @@
 
         let ind = indice * num_page;
 
+        console.log("Debut", indice);
+        console.log("Fin", indice + 25);
+
         for (let i = 0; i < templates.length; i++) {
 
-            if (i < ind) {
+            if (i < indice) {
                 templates[i].style.visibility = "collapse";
             }
-            if ((ind < i) && (i < ind + 25)) {
+            if ((indice < i) && (i < indice + 25)) {
                 templates[i].style.visibility = "visible";
             }
-            if (i > ind + 24) {
+            if (i > indice + 24) {
                 templates[i].style.visibility = "collapse";
             }
         }
 
-        if (indicateur == "plus") {
-            num_page += 1;
-            indice += 25;
-        } else {
-            num_page -= 1;
-            indice -= 25;
-        }
-
-        console.log("NUM", num_page);
-        console.log("INDICE", indice);
-
-        // return indice, num_page;
+        console.log("Page ", num_page);
     }
 
     function afficheBoutons() {
@@ -262,8 +254,8 @@
         } else {
             precedent.style.display = "block";
         }
-        
-        if (num_page >= cpt/25) {
+
+        if (num_page >= cpt / 25) {
             suivant.style.display = "none";
         } else {
             suivant.style.display = "block";
@@ -271,11 +263,15 @@
     }
 
     precedent.addEventListener("click", () => {
+        num_page -= 1;
+        indice -= 25;
         update("moins");
         afficheBoutons();
     });
 
     suivant.addEventListener("click", () => {
+        num_page += 1;
+        indice += 25;
         update("plus");
         afficheBoutons();
     });
@@ -283,6 +279,9 @@
 
     afficherPays(indice);
     update("plus");
+    num_page += 1;
+    indice += 25;
+    console.log("Page", num_page);
     afficheBoutons();
 
 </script>

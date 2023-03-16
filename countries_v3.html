@@ -124,7 +124,8 @@
             text-align: center;
         }
 
-        .infosPays, .drapeauPays {
+        .infosPays,
+        .drapeauPays {
             display: none;
             position: fixed;
             top: 25%;
@@ -136,7 +137,7 @@
             box-shadow: 0 0 10px black;
             flex-direction: column;
             align-items: center;
-            z-index: 4;
+            z-index: 20;
         }
 
         .drapeauPays {
@@ -169,7 +170,8 @@
             z-index: 9;
         }
 
-        .fermer_fen, .fermer_fen2 {
+        .fermer_fen,
+        .fermer_fen2 {
             position: absolute;
             top: 20px;
             right: 20px;
@@ -212,7 +214,8 @@
 
     <div class="drapeauPays">
         <img src="" alt="Drapeau Pays" class="dPays" width="700px" height="450px">
-        <img class="fermer_fen2" src="croix.png" alt="Bouton Fermer" title="Femer la fenêtre" width="30px" height="30px">
+        <img class="fermer_fen2" src="croix.png" alt="Bouton Fermer" title="Femer la fenêtre" width="30px"
+            height="30px">
     </div>
 
     <button class="precedent">PRÉC</button>
@@ -360,6 +363,7 @@
 
     function afficherInfosPays(code) {
 
+        console.log("CLIIIIICK PAYS");
         let infosPays = document.querySelector(".infosPays");
         let nomPays = document.querySelector(".nomPays");
         let capitalePays = document.querySelector(".capPays");
@@ -395,7 +399,9 @@
     }
 
     function afficherDrapeau(code) {
-        
+
+        console.log("CLIIIIICK DRAPEAU");
+
         let drapeauPays = document.querySelector(".drapeauPays");
         let dPays = document.querySelector(".dPays");
 
@@ -412,6 +418,7 @@
             drapeauPays.style.display = "none";
         });
     }
+
     function getPays(code) {
 
         for (const country in all_countries) {

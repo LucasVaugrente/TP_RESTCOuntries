@@ -36,7 +36,7 @@
         thead {
             position: sticky;
             top: -1px;
-            z-index: 2;
+            z-index: 10;
         }
 
         th,
@@ -53,10 +53,11 @@
         }
 
         td {
-            background-color: #3a4054;
+            background-color: #43485c;
             height: max-content;
             border: solid 0 #20273d;
             color: rgb(223, 223, 223);
+            transition: all 0.2s ease-in-out;
         }
 
         tr:nth-child(even) {
@@ -123,10 +124,10 @@
             text-align: center;
         }
 
-        .infosPays {
+        .infosPays, .drapeauPays {
             display: none;
             position: fixed;
-            top: 30%;
+            top: 25%;
             left: 20%;
             width: 45%;
             padding: 5em 10em;
@@ -135,9 +136,15 @@
             box-shadow: 0 0 10px black;
             flex-direction: column;
             align-items: center;
+            z-index: 4;
         }
 
-        .infosPays span, .infosPays h1 {
+        .drapeauPays {
+            top: 20%;
+        }
+
+        .infosPays span,
+        .infosPays h1 {
             color: #f2f2f2;
             font-family: sans-serif;
         }
@@ -147,7 +154,7 @@
         }
 
         .infosPays span {
-            margin: 0 5em;
+            margin: 0 3em;
             font-size: 1.2em;
             width: max-content;
         }
@@ -158,7 +165,11 @@
             align-items: center;
         }
 
-        .fermer_fen {
+        .dPays {
+            z-index: 9;
+        }
+
+        .fermer_fen, .fermer_fen2 {
             position: absolute;
             top: 20px;
             right: 20px;
@@ -166,7 +177,6 @@
             font-weight: bold;
             cursor: pointer;
         }
-
     </style>
 </head>
 
@@ -200,6 +210,11 @@
         <img class="fermer_fen" src="croix.png" alt="Bouton Fermer" title="Femer la fenêtre" width="30px" height="30px">
     </div>
 
+    <div class="drapeauPays">
+        <img src="" alt="Drapeau Pays" class="dPays" width="700px" height="450px">
+        <img class="fermer_fen2" src="croix.png" alt="Bouton Fermer" title="Femer la fenêtre" width="30px" height="30px">
+    </div>
+
     <button class="precedent">PRÉC</button>
     <span class="num_page">1</span>
     <button class="suivant">SUIV</button>
@@ -214,10 +229,21 @@
     var num = document.querySelector(".num_page");
     var numeroPage = parseInt(num.innerHTML);
 
+    var templates = tbody.children;
+
+    let precedent = document.querySelector(".precedent");
+    let suivant = document.querySelector(".suivant");
+    let page = document.querySelector(".num_page");
+
     var indice = 0;
     var num_page = 0;
     var cpt = 1;
 
+    /**
+     * 
+     * Fonction qui génère tous le spays au début du chargmeent de la page
+     * 
+     * */
     function afficherPays() {
 
         for (const country in all_countries) {
@@ -242,6 +268,8 @@
             tr.classList.add("template");
 
             tr.setAttribute("onclick", "afficherInfosPays('" + country + "')");
+            tr.setAttribute("onmouseover", "designOver(this)");
+            tr.setAttribute("onmouseout", "nodesignOver(this)");
 
             num.innerHTML = cpt;
             tr.appendChild(num);
@@ -278,6 +306,7 @@
 
             // Drapeau du pays
             image.src = all_countries[country]._drapeau;
+            image.setAttribute("onclick", "afficherDrapeau('" + country + "')");
             tr.appendChild(url);
 
             tbody.appendChild(tr);
@@ -285,13 +314,6 @@
 
         }
     }
-
-    let p = document.querySelector("tbody");
-    templates = p.children;
-
-    let precedent = document.querySelector(".precedent");
-    let suivant = document.querySelector(".suivant");
-    let page = document.querySelector(".num_page");
 
     /**
      * 
@@ -372,6 +394,24 @@
 
     }
 
+    function afficherDrapeau(code) {
+        
+        let drapeauPays = document.querySelector(".drapeauPays");
+        let dPays = document.querySelector(".dPays");
+
+        let fermer = document.querySelector(".fermer_fen2");
+
+        drapeauPays.style.display = "flex";
+
+        const pays = getPays(code);
+        const drapeau = pays._drapeau;
+
+        dPays.src = pays._drapeau;
+
+        fermer.addEventListener("click", () => {
+            drapeauPays.style.display = "none";
+        });
+    }
     function getPays(code) {
 
         for (const country in all_countries) {
@@ -404,6 +444,24 @@
     update();
     num_page += 1;
     afficheBoutons();
+
+    /**
+     *
+     * Fonction de Design lors du hover de la souris sur une template tr 
+     * 
+     */
+    function designOver(row) {
+        var cells = row.getElementsByTagName("td");
+        for (var i = 0; i < cells.length; i++) {
+            cells[i].style.backgroundColor = "#3d4155";
+        }
+    }
+    function nodesignOver(row) {
+        var cells = row.getElementsByTagName("td");
+        for (var i = 0; i < cells.length; i++) {
+            cells[i].style.backgroundColor = "";
+        }
+    }
 
 </script>
 

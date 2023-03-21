@@ -20886,10 +20886,5 @@ function fill_db() {
   return;
 }
 
-
-
-
-
 fill_db();
 deleteUndefinedCountries();
-// console.log(all_currencies);

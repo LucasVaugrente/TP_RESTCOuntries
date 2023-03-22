@@ -290,6 +290,7 @@
 <script>
 
     var tbody = document.querySelector('tbody');
+    var trs = tbody.querySelectorAll('tr');
 
     var num = document.querySelector(".num_page");
     var numeroPage = parseInt(num.innerHTML);
@@ -333,19 +334,12 @@
     var num_page = 0;
     var cpt = 1;
 
-    var cont_form = null;
-    var lang_form = null;
-    var nom_form = null;
-
     /**
      * 
      * Fonction qui génère tous le spays au début du chargmeent de la page
      * 
      * */
     function afficherPays(continent_form, langue_form, nom_pays_form) {
-
-        console.log("AV");
-        console.log(tbody);
 
         for (const country in all_countries) {
             if (all_countries[country].getPopDensity() == Infinity) {
@@ -406,37 +400,33 @@
             tr.appendChild(continent);
 
             // Drapeau du pays
-            image.src = all_countries[country]._drapeau;
+            image.src = all_countries[country]._drapeau;    
             image.setAttribute("onclick", "afficherDrapeau('" + country + "')");
             tr.appendChild(url);
 
+            // Vérification des filtres
             if (continent_form != null || langue_form != null || nom_pays_form != null) {
-                if (continent_form == all_countries[country]._continent) {
-                    console.log("on add avec cont");
-                    tbody.appendChild(tr);
-                }
 
-                for (let iLangue = 0; iLangue < all_countries[country].getLanguages().length; iLangue++) {
-                    if (all_countries[country].getLanguages()[iLangue]._iso639_2 == langue_form) {
-                        console.log("on add avec langues");
-                        tbody.appendChild(tr);
+                if (continent_form == all_countries[country]._continent || continent_form == null) {
+
+                    for (let iLangue = 0; iLangue < all_countries[country].getLanguages().length; iLangue++) {
+
+                        if (all_countries[country].getLanguages()[iLangue]._iso639_2 == langue_form || langue_form == null) {
+
+                            if (all_countries[country]._nom.includes(nom_pays_form) || nom_pays_form == null) {
+                                tbody.appendChild(tr);    
+                            }
+                        }
                     }
                 }
 
-                if (all_countries[country]._nom.includes(nom_pays_form)) {
-                    console.log("on add avec le nom");
-                    tbody.appendChild(tr);
-                }
+                cpt++;
             }
-
-            // else {
-            //     console.log("on add dans tous les cas");
-            //     tbody.appendChild(tr);
-            //     cpt++;
-            // }
+            else {
+                tbody.appendChild(tr);
+                cpt++;
+            }
         }
-
-        console.log(tbody);
     }
 
     /**
@@ -484,7 +474,6 @@
 
     function afficherInfosPays(code) {
 
-        console.log("CLIIIIICK PAYS");
         let infosPays = document.querySelector(".infosPays");
         let nomPays = document.querySelector(".nomPays");
         let capitalePays = document.querySelector(".capPays");
@@ -520,8 +509,6 @@
     }
 
     function afficherDrapeau(code) {
-
-        console.log("CLIIIIICK DRAPEAU");
 
         let drapeauPays = document.querySelector(".drapeauPays");
         let dPays = document.querySelector(".dPays");
@@ -568,40 +555,11 @@
         afficheBoutons();
     });
 
-    function filtres(param1, param2) {
-        if (param1.name == "continents") {
-            // console.log(param2);
-            // n = 1;
-            // for (const c in tbody.childNodes) {
-            //     console.log(c);
-            //     console.log(tbody.childNodes[n]);
-            //     if((c < 250) && (tbody.childNodes[n].children[5].innerHTML == param2)) {
-            //         console.log(tbody.childNodes[1].children[0].innerHTML);
-            //     }
-            //     n++;
-            // }
-            afficherPays(param2, null, null);
-            for (let i = 0; i < tbody.childElementCount; i++) {
-                tbody.removeChild(tbody.children[i]);
-            }
-            console.log("#############################################################");
-            update();
-            num_page += 1;
-            afficheBoutons();
-        }
-        else if ((param1.name == "langues")) {
-            afficherPays(null, param2, null);
-        }
-        else {
-            afficherPays(null, null, param2);
-        }
-    }
-
     afficherPays(null, null, null);
     update();
     num_page += 1;
     afficheBoutons();
-
+    
     /**
      *
      * Fonction de Design lors du hover de la souris sur une template tr 
@@ -617,6 +575,34 @@
         var cells = row.getElementsByTagName("td");
         for (var i = 0; i < cells.length; i++) {
             cells[i].style.backgroundColor = "";
+        }
+    }
+
+    var cont_form = null;
+    var lang_form = null;
+    var nom_form = null;
+
+    function filtres(param1, param2) {
+        if (param1.name == "continents") {
+            cont_form = param2;
+        }
+        else if (param1.name == "langues") {
+            lang_form = param2;
+        }
+        else {
+            nom_form = param2;
+        }
+        console.log(cont_form);
+        cpt = 1;
+        viderTableau();
+        afficherPays(cont_form, lang_form, nom_form);
+        update();
+        afficheBoutons();
+    }
+
+    function viderTableau() {
+        while (tbody.children.length > 0) {
+            tbody.children[0].remove();
         }
     }
 

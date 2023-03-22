@@ -200,6 +200,7 @@
 
         .contfiltrage select,
         .languesfiltrage select,
+        form button,
         .paysfiltrage input {
             padding: 0.7em;
             border-radius: 10px;
@@ -217,12 +218,14 @@
 
     <div class="filtrages">
 
-        <form action="" method="get">
+        <form>
             <div class="contfiltrage">
                 <label for="continents">Choisissez un continent :</label>
                 <select id="continents" name="continents">
                     <option value="">-- Choisir --</option>
                 </select>
+                <button type="button"
+                    onclick="filtres(document.querySelector('#continents'), document.querySelector('#continents').value)">OK</button>
             </div>
 
             <div class="languesfiltrage">
@@ -230,12 +233,15 @@
                 <select id="langues" name="langues">
                     <option value="">-- Choisir --</option>
                 </select>
+                <button type="button"
+                    onclick="filtres(document.querySelector('#langues'), document.querySelector('#langues').value)">OK</button>
             </div>
 
             <div class="paysfiltrage">
                 <label for="pays">Choisissez un pays :</label>
                 <input type="text" name="pays" id="pays" />
-                <input type="submit" value="OK">
+                <button type="button"
+                    onclick="filtres(document.querySelector('#pays'), document.querySelector('#pays').value)">OK</button>
             </div>
         </form>
 
@@ -283,7 +289,7 @@
 <script src="countries.js"></script>
 <script>
 
-    const tbody = document.querySelector('tbody');
+    var tbody = document.querySelector('tbody');
 
     var num = document.querySelector(".num_page");
     var numeroPage = parseInt(num.innerHTML);
@@ -297,36 +303,49 @@
     let contFiltre = document.getElementById("continents");
     let languesfiltre = document.getElementById("langues");
 
-    var compteur = 1;
+    let tab_cont = [];
     // Filtres Continents Remplie
     for (const country in all_countries) {
-        let option = document.createElement("option");
-        option.innerHTML = all_countries[country]._continent;
-        option.setAttribute("value", compteur);
-        compteur++;
+        if (!tab_cont.includes(all_countries[country]._continent)) {
+            let option = document.createElement("option");
+            option.innerHTML = all_countries[country]._continent;
+            option.setAttribute("value", all_countries[country]._continent);
 
-        contFiltre.appendChild(option);
+            contFiltre.appendChild(option);
+            tab_cont.push(all_countries[country]._continent);
+        }
     }
 
+    let tab_lan = [];
     // Filtres Langues Remplie
     for (const langue in all_languages) {
-        let option = document.createElement("option");
-        option.innerHTML = all_languages[langue]._name;
-        option.setAttribute("value", all_languages[langue]._iso639_2);
+        if (!tab_lan.includes(all_languages[langue]._name)) {
+            let option = document.createElement("option");
+            option.innerHTML = all_languages[langue]._name;
+            option.setAttribute("value", all_languages[langue]._iso639_2);
 
-        languesfiltre.appendChild(option);
+            languesfiltre.appendChild(option);
+            tab_lan.push(all_languages[langue]._name)
+        }
     }
 
     var indice = 0;
     var num_page = 0;
     var cpt = 1;
 
+    var cont_form = null;
+    var lang_form = null;
+    var nom_form = null;
+
     /**
      * 
      * Fonction qui génère tous le spays au début du chargmeent de la page
      * 
      * */
-    function afficherPays() {
+    function afficherPays(continent_form, langue_form, nom_pays_form) {
+
+        console.log("AV");
+        console.log(tbody);
 
         for (const country in all_countries) {
             if (all_countries[country].getPopDensity() == Infinity) {
@@ -391,10 +410,33 @@
             image.setAttribute("onclick", "afficherDrapeau('" + country + "')");
             tr.appendChild(url);
 
-            tbody.appendChild(tr);
-            cpt++;
+            if (continent_form != null || langue_form != null || nom_pays_form != null) {
+                if (continent_form == all_countries[country]._continent) {
+                    console.log("on add avec cont");
+                    tbody.appendChild(tr);
+                }
 
+                for (let iLangue = 0; iLangue < all_countries[country].getLanguages().length; iLangue++) {
+                    if (all_countries[country].getLanguages()[iLangue]._iso639_2 == langue_form) {
+                        console.log("on add avec langues");
+                        tbody.appendChild(tr);
+                    }
+                }
+
+                if (all_countries[country]._nom.includes(nom_pays_form)) {
+                    console.log("on add avec le nom");
+                    tbody.appendChild(tr);
+                }
+            }
+
+            // else {
+            //     console.log("on add dans tous les cas");
+            //     tbody.appendChild(tr);
+            //     cpt++;
+            // }
         }
+
+        console.log(tbody);
     }
 
     /**
@@ -422,7 +464,7 @@
 
     /**
      * 
-     * Fonction qui affiche/retire les boutosn Suivant et Précédent 
+     * Fonction qui affiche/retire les boutons Suivant et Précédent 
      * En fonction du numéro de page, si on est au début, cela enlève le "Précédent" et la même chose pour "Suivant"
      * 
      * */
@@ -433,7 +475,7 @@
             precedent.style.display = "block";
         }
 
-        if (num_page >= cpt / 26) {
+        if (num_page >= cpt / 25) {
             suivant.style.display = "none";
         } else {
             suivant.style.display = "block";
@@ -526,8 +568,36 @@
         afficheBoutons();
     });
 
+    function filtres(param1, param2) {
+        if (param1.name == "continents") {
+            // console.log(param2);
+            // n = 1;
+            // for (const c in tbody.childNodes) {
+            //     console.log(c);
+            //     console.log(tbody.childNodes[n]);
+            //     if((c < 250) && (tbody.childNodes[n].children[5].innerHTML == param2)) {
+            //         console.log(tbody.childNodes[1].children[0].innerHTML);
+            //     }
+            //     n++;
+            // }
+            afficherPays(param2, null, null);
+            for (let i = 0; i < tbody.childElementCount; i++) {
+                tbody.removeChild(tbody.children[i]);
+            }
+            console.log("#############################################################");
+            update();
+            num_page += 1;
+            afficheBoutons();
+        }
+        else if ((param1.name == "langues")) {
+            afficherPays(null, param2, null);
+        }
+        else {
+            afficherPays(null, null, param2);
+        }
+    }
 
-    afficherPays();
+    afficherPays(null, null, null);
     update();
     num_page += 1;
     afficheBoutons();
@@ -552,4 +622,4 @@
 
 </script>
 
-</html>
+</html

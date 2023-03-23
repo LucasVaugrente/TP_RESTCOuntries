@@ -154,13 +154,13 @@
     var num_page = 0;
     var cpt = 1;
 
+    /**
+     * 
+     * Fonction qui génère tous les pays au début du chargement de la page
+     * 
+     * */
     function afficherPays(occur) {
-
-        for (const country in all_countries) {
-            if (all_countries[country].getPopDensity() == Infinity) {
-            }
-        }
-
+        
         for (const country in all_countries) {
             let num = document.createElement("td");
             let nom = document.createElement("td");
@@ -197,7 +197,7 @@
             }
 
             // Densité du pays
-            if (all_countries[country].getPopDensity() != Infinity) {
+            if (all_countries[country].getPopDensity() != null) {
                 densite.innerHTML = all_countries[country].getPopDensity();
                 tr.appendChild(densite);
             } else {
@@ -226,7 +226,12 @@
     let suivant = document.querySelector(".suivant");
     let page = document.querySelector(".num_page");
 
-
+    /**
+     * 
+     * Fonction qui met à jour l'affichage des lignes. 
+     * En fonction de l'indice, cela enlève les parties autour des 25 pays à afficher
+     * 
+     * */
     function update() {
 
         let ind = indice * num_page;
@@ -247,6 +252,12 @@
         console.log("Page ", num_page);
     }
 
+    /**
+     * 
+     * Fonction qui affiche/retire les boutons Suivant et Précédent 
+     * En fonction du numéro de page, si on est au début, cela enlève le "Précédent" et la même chose pour "Suivant"
+     * 
+     * */
     function afficheBoutons() {
         if (num_page <= 1) {
             precedent.style.display = "none";
@@ -261,6 +272,11 @@
         }
     }
 
+    /**
+     * 
+     * L'évènement du bouton Précédent qui met à jour le numéro de page, l'indice
+     * 
+     */
     precedent.addEventListener("click", () => {
         num_page -= 1;
         indice -= 25;
@@ -272,6 +288,11 @@
         afficheBoutons();
     });
 
+    /**
+     * 
+     * L'évènement du bouton Suivant qui met à jour le numéro de page, l'indice
+     * 
+     */
     suivant.addEventListener("click", () => {
         num_page += 1;
         indice += 25;
@@ -281,7 +302,6 @@
         num.innerHTML = numeroPage;
         afficheBoutons();
     });
-
 
     afficherPays(indice);
     update();

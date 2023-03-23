@@ -272,15 +272,10 @@
 
     /**
      * 
-     * Fonction qui génère tous le spays au début du chargmeent de la page
+     * Fonction qui génère tous les pays au début du chargement de la page
      * 
      * */
     function afficherPays() {
-
-        for (const country in all_countries) {
-            if (all_countries[country].getPopDensity() == Infinity) {
-            }
-        }
 
         for (const country in all_countries) {
             let num = document.createElement("td");
@@ -323,7 +318,7 @@
             }
 
             // Densité du pays
-            if (all_countries[country].getPopDensity() != Infinity) {
+            if (all_countries[country].getPopDensity() != null) {
                 densite.innerHTML = all_countries[country].getPopDensity();
                 tr.appendChild(densite);
             } else {
@@ -389,6 +384,11 @@
         }
     }
 
+    /**
+     * 
+     * Fonction qui génère la PopUp de détails d'un pays lorsqu'on le clique dessus
+     * 
+     */
     function afficherInfosPays(code) {
 
         let infosPays = document.querySelector(".infosPays");
@@ -425,6 +425,11 @@
 
     }
 
+    /**
+     * 
+     * Fonction qui génère la PopUp de détails du drapeau d'un pays lorsqu'on le clique dessus
+     * 
+     */
     function afficherDrapeau(code) {
 
         let drapeauPays = document.querySelector(".drapeauPays");
@@ -444,6 +449,11 @@
         });
     }
 
+    /**
+     * 
+     * Fonction qui récupère les informations d'un pays selon son code passé en paramètre
+     * 
+     */
     function getPays(code) {
 
         for (const country in all_countries) {
@@ -453,6 +463,11 @@
         }
     }
 
+    /**
+     * 
+     * L'évènement du bouton Précédent qui met à jour le numéro de page, l'indice
+     * 
+     */
     precedent.addEventListener("click", () => {
         num_page -= 1;
         indice -= 25;
@@ -463,6 +478,11 @@
         afficheBoutons();
     });
 
+    /**
+     * 
+     * L'évènement du bouton Suivant qui met à jour le numéro de page, l'indice
+     * 
+     */
     suivant.addEventListener("click", () => {
         num_page += 1;
         indice += 25;

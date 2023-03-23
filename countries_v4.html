@@ -359,8 +359,8 @@
     let contFiltre = document.getElementById("continents");
     let languesfiltre = document.getElementById("langues");
 
+    // Filtres Continents Remplissage
     let tab_cont = [];
-    // Filtres Continents Remplie
     for (const country in all_countries) {
         if (!tab_cont.includes(all_countries[country]._continent)) {
             let option = document.createElement("option");
@@ -372,8 +372,8 @@
         }
     }
 
+    // Filtres Langues Remplissage
     let tab_lan = [];
-    // Filtres Langues Remplie
     for (const langue in all_languages) {
         if (!tab_lan.includes(all_languages[langue]._name)) {
             let option = document.createElement("option");
@@ -393,15 +393,10 @@
 
     /**
      * 
-     * Fonction qui génère tous le spays au début du chargmeent de la page
+     * Fonction qui génère tous les pays au début du chargement de la page
      * 
      * */
     function afficherPays(continent_form, langue_form, nom_pays_form) {
-
-        for (const country in all_countries) {
-            if (all_countries[country].getPopDensity() == Infinity) {
-            }
-        }
 
         for (const country in all_countries) {
             let num = document.createElement("td");
@@ -444,7 +439,7 @@
             }
 
             // Densité du pays
-            if (all_countries[country].getPopDensity() != Infinity) {
+            if (all_countries[country].getPopDensity() != null) {
                 densite.innerHTML = all_countries[country].getPopDensity();
                 tr.appendChild(densite);
             } else {
@@ -470,7 +465,7 @@
 
                         if (all_countries[country].getLanguages()[iLangue]._iso639_2 == langue_form || langue_form == null) {
                             if (all_countries[country]._nom.includes(nom_pays_form) || nom_pays_form == null) {
-                                if(!tbody.contains(tr)) {
+                                if (!tbody.contains(tr)) {
                                     tbody.appendChild(tr);
                                     cpt2++;
                                 }
@@ -549,6 +544,11 @@
         }
     }
 
+    /**
+     * 
+     * Fonction qui génère la PopUp de détails d'un pays lorsqu'on le clique dessus
+     * 
+     */
     function afficherInfosPays(code) {
 
         let infosPays = document.querySelector(".infosPays");
@@ -585,6 +585,11 @@
 
     }
 
+    /**
+     * 
+     * Fonction qui génère la PopUp de détails du drapeau d'un pays lorsqu'on le clique dessus
+     * 
+     */
     function afficherDrapeau(code) {
 
         let drapeauPays = document.querySelector(".drapeauPays");
@@ -604,6 +609,11 @@
         });
     }
 
+    /**
+     * 
+     * Fonction qui récupère les informations d'un pays selon son code passé en paramètre
+     * 
+     */
     function getPays(code) {
 
         for (const country in all_countries) {
@@ -613,6 +623,11 @@
         }
     }
 
+    /**
+     * 
+     * L'évènement du bouton Précédent qui met à jour le numéro de page, l'indice
+     * 
+     */
     precedent.addEventListener("click", () => {
         num_page -= 1;
         indice -= 25;
@@ -622,6 +637,11 @@
         afficheBoutons();
     });
 
+    /**
+     * 
+     * L'évènement du bouton Suivant qui met à jour le numéro de page, l'indice
+     * 
+     */
     suivant.addEventListener("click", () => {
         num_page += 1;
         indice += 25;
@@ -631,6 +651,11 @@
         afficheBoutons();
     });
 
+    /**
+     * 
+     * L'évènement du bouton Précédent qui met à jour le numéro de page, l'indice spécialement avec des filtres
+     * 
+     */
     precedent_f.addEventListener("click", () => {
         num_page_f -= 1;
         indice -= 25;
@@ -640,6 +665,11 @@
         afficheBoutonsFiltres();
     });
 
+    /**
+     * 
+     * L'évènement du bouton Suivant qui met à jour le numéro de page, l'indice spécialement avec des filtres
+     * 
+     */
     suivant_f.addEventListener("click", () => {
         num_page_f += 1;
         indice += 25;
@@ -672,10 +702,25 @@
         }
     }
 
+    /* ###################### FONCTIONS FILTRES ###################### */
+
     var cont_form = null;
     var lang_form = null;
     var nom_form = null;
 
+    /**
+     * 
+     * Fonction filtres qui filtres les pays selon un paramètre de filtre.
+     * 
+     * param1 : Bloc de filtres selectionné
+     * param2 : Champ du filtre selectionné
+     * 
+     * Au début, cela vérifie le type de filtres selectionné grâce au param1, cela affiche les boutons et le numéro de page spécialement pour les filtres et enlève celles de base.
+     * Ensuite, cela vide le tableau et reconstruit le tableau des pays avec le filtre. cont_form, lang_form et nom_form sont des variables globales, ce qui fait que les filtres
+     * pourront se combinés.
+     * 
+     * 
+     */
     function filtres(param1, param2) {
         num.style.display = "none";
         num_f.style.display = "block";
@@ -701,6 +746,11 @@
         afficheBoutonsFiltres();
     }
 
+    /**
+     * 
+     * Fonction qui vide le tbody du tableau
+     *  
+     */
     function viderTableau() {
         while (tbody.children.length > 0) {
             tbody.children[0].remove();

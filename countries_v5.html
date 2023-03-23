@@ -71,7 +71,7 @@
             background-color: #2c3553;
         }
 
-        th:focus {
+        .thFocus {
             background-color: #3b466d;
         }
 
@@ -305,11 +305,11 @@
         <thead>
             <tr>
                 <th class="thId" tabindex="1">Pays</th>
-                <th tabindex="1" onclick="trier_Nom()">Nom</th>
-                <th tabindex="1" onclick="trier_Pop()">Population</th>
-                <th tabindex="1" onclick="trier_Surface()">Surface</th>
-                <th tabindex="1" onclick="trier_Dens()">Densité (Population)</th>
-                <th tabindex="1" onclick="trier_Continent()">Continent</th>
+                <th class="thNom" tabindex="1" onclick="trier_Nom()">Nom</th>
+                <th class="thPop" tabindex="1" onclick="trier_Pop()">Population</th>
+                <th class="thSurf" tabindex="1" onclick="trier_Surface()">Surface</th>
+                <th class="thDens" tabindex="1" onclick="trier_Dens()">Densité (Population)</th>
+                <th class="thCont" tabindex="1" onclick="trier_Continent()">Continent</th>
                 <th class="thDrapeau" tabindex="1">Drapeau</th>
             </tr>
         </thead>
@@ -363,7 +363,6 @@
 <script>
 
     var tbody = document.querySelector('tbody');
-    var trs = tbody.querySelectorAll('tr');
 
     var num = document.querySelector(".num_page");
     var numeroPage = parseInt(num.innerHTML);
@@ -382,8 +381,8 @@
     let contFiltre = document.getElementById("continents");
     let languesfiltre = document.getElementById("langues");
 
+    // Filtres Continents Remplissage
     let tab_cont = [];
-    // Filtres Continents Remplie
     for (const country in all_countries) {
         if (!tab_cont.includes(all_countries[country]._continent)) {
             let option = document.createElement("option");
@@ -395,8 +394,8 @@
         }
     }
 
+    // Filtres Langues Remplissage
     let tab_lan = [];
-    // Filtres Langues Remplie
     for (const langue in all_languages) {
         if (!tab_lan.includes(all_languages[langue]._name)) {
             let option = document.createElement("option");
@@ -416,15 +415,10 @@
 
     /**
      * 
-     * Fonction qui génère tous le spays au début du chargmeent de la page
+     * Fonction qui génère tous les pays au début du chargement de la page
      * 
      * */
     function afficherPays(continent_form, langue_form, nom_pays_form) {
-
-        for (const country in all_countries) {
-            if (all_countries[country].getPopDensity() == Infinity) {
-            }
-        }
 
         for (const country in all_countries) {
             let num = document.createElement("td");
@@ -467,7 +461,7 @@
             }
 
             // Densité du pays
-            if (all_countries[country].getPopDensity() != Infinity) {
+            if (all_countries[country].getPopDensity() != null) {
                 densite.innerHTML = all_countries[country].getPopDensity();
                 tr.appendChild(densite);
             } else {
@@ -572,6 +566,11 @@
         }
     }
 
+    /**
+     * 
+     * Fonction qui génère la PopUp de détails d'un pays lorsqu'on le clique dessus
+     * 
+     */
     function afficherInfosPays(code) {
 
         let infosPays = document.querySelector(".infosPays");
@@ -608,6 +607,11 @@
 
     }
 
+    /**
+     * 
+     * Fonction qui génère la PopUp de détails du drapeau d'un pays lorsqu'on le clique dessus
+     * 
+     */
     function afficherDrapeau(code) {
 
         let drapeauPays = document.querySelector(".drapeauPays");
@@ -627,6 +631,11 @@
         });
     }
 
+    /**
+     * 
+     * Fonction qui récupère les informations d'un pays selon son code passé en paramètre
+     * 
+     */
     function getPays(code) {
 
         for (const country in all_countries) {
@@ -636,6 +645,11 @@
         }
     }
 
+    /**
+     * 
+     * L'évènement du bouton Précédent qui met à jour le numéro de page, l'indice
+     * 
+     */
     precedent.addEventListener("click", () => {
         num_page -= 1;
         indice -= 25;
@@ -645,6 +659,11 @@
         afficheBoutons();
     });
 
+    /**
+     * 
+     * L'évènement du bouton Suivant qui met à jour le numéro de page, l'indice
+     * 
+     */
     suivant.addEventListener("click", () => {
         num_page += 1;
         indice += 25;
@@ -654,6 +673,11 @@
         afficheBoutons();
     });
 
+    /**
+     * 
+     * L'évènement du bouton Précédent qui met à jour le numéro de page, l'indice spécialement avec des filtres
+     * 
+     */
     precedent_f.addEventListener("click", () => {
         num_page_f -= 1;
         indice -= 25;
@@ -663,6 +687,11 @@
         afficheBoutonsFiltres();
     });
 
+    /**
+     * 
+     * L'évènement du bouton Suivant qui met à jour le numéro de page, l'indice spécialement avec des filtres
+     * 
+     */
     suivant_f.addEventListener("click", () => {
         num_page_f += 1;
         indice += 25;
@@ -695,13 +724,30 @@
         }
     }
 
+    /* ###################### FONCTIONS FILTRES ###################### */
+
     var cont_form = null;
     var lang_form = null;
     var nom_form = null;
 
+    /**
+     * 
+     * Fonction filtres qui filtres les pays selon un paramètre de filtre.
+     * 
+     * param1 : Bloc de filtres selectionné
+     * param2 : Champ du filtre selectionné
+     * 
+     * Au début, cela vérifie le type de filtres selectionné grâce au param1, cela affiche les boutons et le numéro de page spécialement pour les filtres et enlève celles de base.
+     * Ensuite, cela vide le tableau et reconstruit le tableau des pays avec le filtre. cont_form, lang_form et nom_form sont des variables globales, ce qui fait que les filtres
+     * pourront se combinés.
+     * 
+     * 
+     */
     function filtres(param1, param2) {
+
         num.style.display = "none";
         num_f.style.display = "block";
+
         if (param1.name == "continents") {
             cont_form = param2;
         }
@@ -724,11 +770,20 @@
         afficheBoutonsFiltres();
     }
 
+    /**
+     * 
+     * Fonction qui vide le tbody du tableau
+     *  
+     */
     function viderTableau() {
         while (tbody.children.length > 0) {
             tbody.children[0].remove();
         }
     }
+
+
+    /* ###################### FONCTIONS TRI ###################### */
+
 
     function trier_Nom() {
         var itemsArr = [];
@@ -742,6 +797,7 @@
         for (i = 0; i < itemsArr.length; ++i) {
             tbody.appendChild(itemsArr[i]);
         }
+        update();
     }
 
     function trier_Pop() {
@@ -756,6 +812,7 @@
         for (i = 0; i < itemsArr.length; ++i) {
             tbody.appendChild(itemsArr[i]);
         }
+        update();
     }
 
     function trier_Surface() {
@@ -771,6 +828,7 @@
         for (i = 0; i < itemsArr.length; ++i) {
             tbody.appendChild(itemsArr[i]);
         }
+        update();
     }
 
     function trier_Dens() {
@@ -785,11 +843,58 @@
         for (i = 0; i < itemsArr.length; ++i) {
             tbody.appendChild(itemsArr[i]);
         }
+        update();
     }
 
-    function trier_Continent() {
+    function trier_Continent() { }
 
-    }
+
+    // Ajout du style pour voir quel champ a été sélectionné (TRI)
+    var thNom = document.querySelector('.thNom');
+    var thPop = document.querySelector('.thPop');
+    var thSurf = document.querySelector('.thSurf');
+    var thDens = document.querySelector('.thDens');
+    var thCont = document.querySelector('.thCont');
+
+    thNom.addEventListener('click', () => {
+        thNom.classList.add('thFocus');
+        thPop.classList.remove('thFocus');
+        thSurf.classList.remove('thFocus');
+        thDens.classList.remove('thFocus');
+        thCont.classList.remove('thFocus');
+    });
+
+    thPop.addEventListener('click', () => {
+        thNom.classList.remove('thFocus');
+        thPop.classList.add('thFocus');
+        thSurf.classList.remove('thFocus');
+        thDens.classList.remove('thFocus');
+        thCont.classList.remove('thFocus');
+    });
+
+    thSurf.addEventListener('click', () => {
+        thNom.classList.remove('thFocus');
+        thPop.classList.remove('thFocus');
+        thSurf.classList.add('thFocus');
+        thDens.classList.remove('thFocus');
+        thCont.classList.remove('thFocus');
+    });
+
+    thDens.addEventListener('click', () => {
+        thNom.classList.remove('thFocus');
+        thPop.classList.remove('thFocus');
+        thSurf.classList.remove('thFocus');
+        thDens.classList.add('thFocus');
+        thCont.classList.remove('thFocus');
+    });
+
+    thCont.addEventListener('click', () => {
+        thNom.classList.remove('thFocus');
+        thPop.classList.remove('thFocus');
+        thSurf.classList.remove('thFocus');
+        thDens.classList.remove('thFocus');
+        thCont.classList.add('thFocus');
+    });
 
 </script>
 

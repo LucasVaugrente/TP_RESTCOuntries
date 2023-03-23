@@ -55,18 +55,22 @@
             text-decoration: none;
         }
 
-        .thDrapeau {
+        .thDrapeau,
+        .thId {
             cursor: no-drop;
         }
 
-        .thDrapeau:hover, .thDrapeau:focus {
+        .thDrapeau:hover,
+        .thId:hover,
+        .thDrapeau:focus,
+        .thId:focus {
             background-color: #20273d;
         }
 
         th:hover {
             background-color: #2c3553;
         }
-        
+
         th:focus {
             background-color: #3b466d;
         }
@@ -300,12 +304,12 @@
     <table>
         <thead>
             <tr>
-                <th tabindex="1">Pays</th>
-                <th tabindex="1">Nom</th>
-                <th tabindex="1">Population</th>
-                <th tabindex="1">Surface</th>
-                <th tabindex="1">Densité (Population)</th>
-                <th tabindex="1">Continent</th>
+                <th class="thId" tabindex="1">Pays</th>
+                <th tabindex="1" onclick="trier_Nom()">Nom</th>
+                <th tabindex="1" onclick="trier_Pop()">Population</th>
+                <th tabindex="1" onclick="trier_Surface()">Surface</th>
+                <th tabindex="1" onclick="trier_Dens()">Densité (Population)</th>
+                <th tabindex="1" onclick="trier_Continent()">Continent</th>
                 <th class="thDrapeau" tabindex="1">Drapeau</th>
             </tr>
         </thead>
@@ -489,7 +493,7 @@
 
                         if (all_countries[country].getLanguages()[iLangue]._iso639_2 == langue_form || langue_form == null) {
                             if (all_countries[country]._nom.includes(nom_pays_form) || nom_pays_form == null) {
-                                if(!tbody.contains(tr)) {
+                                if (!tbody.contains(tr)) {
                                     tbody.appendChild(tr);
                                     cpt2++;
                                 }
@@ -724,6 +728,67 @@
         while (tbody.children.length > 0) {
             tbody.children[0].remove();
         }
+    }
+
+    function trier_Nom() {
+        var itemsArr = [];
+        for (var i in tbody.childNodes) {
+            if (tbody.childNodes[i].nodeType == 1) {
+                itemsArr.push(tbody.childNodes[i]);
+            }
+        }
+        itemsArr.sort((a, b) => a.children[0].innerHTML - b.children[0].innerHTML);
+
+        for (i = 0; i < itemsArr.length; ++i) {
+            tbody.appendChild(itemsArr[i]);
+        }
+    }
+
+    function trier_Pop() {
+        var itemsArr = [];
+        for (var i in tbody.childNodes) {
+            if (tbody.childNodes[i].nodeType == 1) {
+                itemsArr.push(tbody.childNodes[i]);
+            }
+        }
+        itemsArr.sort((a, b) => a.children[2].innerHTML - b.children[2].innerHTML);
+
+        for (i = 0; i < itemsArr.length; ++i) {
+            tbody.appendChild(itemsArr[i]);
+        }
+    }
+
+    function trier_Surface() {
+        var itemsArr = [];
+        for (var i in tbody.childNodes) {
+            if (tbody.childNodes[i].nodeType == 1) {
+                itemsArr.push(tbody.childNodes[i]);
+            }
+        }
+
+        itemsArr.sort((a, b) => a.children[3].innerHTML.slice(0, a.children[3].innerHTML.length - 15) - b.children[3].innerHTML.slice(0, b.children[3].innerHTML.length - 15));
+
+        for (i = 0; i < itemsArr.length; ++i) {
+            tbody.appendChild(itemsArr[i]);
+        }
+    }
+
+    function trier_Dens() {
+        var itemsArr = [];
+        for (var i in tbody.childNodes) {
+            if (tbody.childNodes[i].nodeType == 1) {
+                itemsArr.push(tbody.childNodes[i]);
+            }
+        }
+        itemsArr.sort((a, b) => a.children[4].innerHTML - b.children[4].innerHTML);
+
+        for (i = 0; i < itemsArr.length; ++i) {
+            tbody.appendChild(itemsArr[i]);
+        }
+    }
+
+    function trier_Continent() {
+
     }
 
 </script>

@@ -81,7 +81,9 @@
         }
 
         .precedent,
-        .suivant {
+        .precedent_filtres,
+        .suivant,
+        .suivant_filtres {
             position: fixed;
             bottom: 1em;
             font-size: 1em;
@@ -96,25 +98,36 @@
             transition: all 0.1s ease-in-out;
         }
 
+        .precedent_filtres,
+        .suivant_filtres {
+            display: none;
+        }
+
         .precedent:hover,
-        .suivant:hover {
+        .precedent_filtres:hover,
+        .suivant:hover,
+        .suivant_filtres:hover {
             opacity: 0.8;
         }
 
         .precedent:active,
-        .suivant:active {
+        .precedent_filtres:hover,
+        .suivant:active,
+        .suivant_filtres:hover {
             background-color: #20273d;
         }
 
-        .precedent {
+        .precedent,
+        .precedent_filtres {
             left: 2em;
         }
 
-        .suivant {
+        .suivant,
+        .suivant_filtres {
             right: 2em;
         }
 
-        .num_page {
+        .num_page, .num_page_f {
             display: block;
             margin-top: 1em;
             color: white;
@@ -122,6 +135,10 @@
             font-family: sans-serif;
             font-size: 2em;
             text-align: center;
+        }
+
+        .num_page_f {
+            display: none;
         }
 
         .infosPays,
@@ -188,6 +205,7 @@
             display: flex;
             justify-content: space-around;
             align-items: center;
+            box-shadow: 0 2px 5px black;
         }
 
         .contfiltrage,
@@ -222,7 +240,7 @@
             <div class="contfiltrage">
                 <label for="continents">Choisissez un continent :</label>
                 <select id="continents" name="continents">
-                    <option value="">-- Choisir --</option>
+                    <option value="">-- CHOISIR --</option>
                 </select>
                 <button type="button"
                     onclick="filtres(document.querySelector('#continents'), document.querySelector('#continents').value)">OK</button>
@@ -231,7 +249,7 @@
             <div class="languesfiltrage">
                 <label for="langues">Choisissez une langue :</label>
                 <select id="langues" name="langues">
-                    <option value="">-- Choisir --</option>
+                    <option value="">-- CHOISIR --</option>
                 </select>
                 <button type="button"
                     onclick="filtres(document.querySelector('#langues'), document.querySelector('#langues').value)">OK</button>
@@ -280,9 +298,12 @@
             height="30px">
     </div>
 
+    <button class="precedent_filtres">PRÉC</button>
     <button class="precedent">PRÉC</button>
     <span class="num_page">1</span>
+    <span class="num_page_f">1</span>
     <button class="suivant">SUIV</button>
+    <button class="suivant_filtres">SUIV</button>
 
 </body>
 
@@ -299,6 +320,8 @@
 
     let precedent = document.querySelector(".precedent");
     let suivant = document.querySelector(".suivant");
+    let precedent_f = document.querySelector(".precedent_filtres");
+    let suivant_f = document.querySelector(".suivant_filtres");
     let page = document.querySelector(".num_page");
 
     let contFiltre = document.getElementById("continents");
@@ -333,6 +356,7 @@
     var indice = 0;
     var num_page = 0;
     var cpt = 1;
+    var cpt2 = 0;
 
     /**
      * 
@@ -400,7 +424,7 @@
             tr.appendChild(continent);
 
             // Drapeau du pays
-            image.src = all_countries[country]._drapeau;    
+            image.src = all_countries[country]._drapeau;
             image.setAttribute("onclick", "afficherDrapeau('" + country + "')");
             tr.appendChild(url);
 
@@ -414,13 +438,12 @@
                         if (all_countries[country].getLanguages()[iLangue]._iso639_2 == langue_form || langue_form == null) {
 
                             if (all_countries[country]._nom.includes(nom_pays_form) || nom_pays_form == null) {
-                                tbody.appendChild(tr);    
+                                tbody.appendChild(tr);
+                                cpt2++;
                             }
                         }
                     }
                 }
-
-                cpt++;
             }
             else {
                 tbody.appendChild(tr);
@@ -469,6 +492,26 @@
             suivant.style.display = "none";
         } else {
             suivant.style.display = "block";
+        }
+    }
+
+    /**
+     * 
+     * Fonction qui affiche/retire les boutons Suivant et Précédent 
+     * En fonction du numéro de page, si on est au début, cela enlève le "Précédent" et la même chose pour "Suivant"
+     * Avec les filtres, le nombre de page peut changer, d'où une autre fonction conçue pour ça
+     * 
+     * */
+    function afficheBoutonsFiltres() {
+        if (num_page <= 1) {
+            precedent_f.style.display = "none";
+        } else {
+            precedent_f.style.display = "block";
+        }
+        if (num_page >= cpt2 / 25) {
+            suivant_f.style.display = "none";
+        } else {
+            suivant_f.style.display = "block";
         }
     }
 
@@ -555,11 +598,29 @@
         afficheBoutons();
     });
 
+    precedent_f.addEventListener("click", () => {
+        num_page_f -= 1;
+        indice -= 25;
+        numeroPage -= 1;
+        num.innerHTML = numeroPage;
+        update();
+        afficheBoutonsFiltres();
+    });
+
+    suivant_f.addEventListener("click", () => {
+        num_page_f += 1;
+        indice += 25;
+        update();
+        numeroPage += 1;
+        num.innerHTML = numeroPage;
+        afficheBoutonsFiltres();
+    });
+
     afficherPays(null, null, null);
     update();
     num_page += 1;
     afficheBoutons();
-    
+
     /**
      *
      * Fonction de Design lors du hover de la souris sur une template tr 
@@ -583,6 +644,7 @@
     var nom_form = null;
 
     function filtres(param1, param2) {
+        num_page.style.display = "none";
         if (param1.name == "continents") {
             cont_form = param2;
         }
@@ -592,12 +654,17 @@
         else {
             nom_form = param2;
         }
-        console.log(cont_form);
+        precedent_f.style.display = "block";
+        suivant_f.style.display = "block";
+        precedent.style.display = "none";
+        suivant.style.display = "none";
+
         cpt = 1;
+        num_page_f = 1;
         viderTableau();
         afficherPays(cont_form, lang_form, nom_form);
         update();
-        afficheBoutons();
+        afficheBoutonsFiltres();
     }
 
     function viderTableau() {

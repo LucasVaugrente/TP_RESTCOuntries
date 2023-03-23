@@ -127,7 +127,8 @@
             right: 2em;
         }
 
-        .num_page, .num_page_f {
+        .num_page,
+        .num_page_f {
             display: block;
             margin-top: 1em;
             color: white;
@@ -316,6 +317,9 @@
     var num = document.querySelector(".num_page");
     var numeroPage = parseInt(num.innerHTML);
 
+    var num_f = document.querySelector(".num_page_f");
+    var numeroPage_f = parseInt(num.innerHTML);
+
     var templates = tbody.children;
 
     let precedent = document.querySelector(".precedent");
@@ -355,8 +359,9 @@
 
     var indice = 0;
     var num_page = 0;
+    var num_page_f = 0;
     var cpt = 1;
-    var cpt2 = 0;
+    var cpt2 = 1;
 
     /**
      * 
@@ -436,10 +441,11 @@
                     for (let iLangue = 0; iLangue < all_countries[country].getLanguages().length; iLangue++) {
 
                         if (all_countries[country].getLanguages()[iLangue]._iso639_2 == langue_form || langue_form == null) {
-
                             if (all_countries[country]._nom.includes(nom_pays_form) || nom_pays_form == null) {
-                                tbody.appendChild(tr);
-                                cpt2++;
+                                if(!tbody.contains(tr)) {
+                                    tbody.appendChild(tr);
+                                    cpt2++;
+                                }
                             }
                         }
                     }
@@ -503,12 +509,12 @@
      * 
      * */
     function afficheBoutonsFiltres() {
-        if (num_page <= 1) {
+        if (num_page_f <= 1) {
             precedent_f.style.display = "none";
         } else {
             precedent_f.style.display = "block";
         }
-        if (num_page >= cpt2 / 25) {
+        if (num_page_f >= cpt2 / 25) {
             suivant_f.style.display = "none";
         } else {
             suivant_f.style.display = "block";
@@ -584,7 +590,6 @@
         indice -= 25;
         numeroPage -= 1;
         num.innerHTML = numeroPage;
-
         update();
         afficheBoutons();
     });
@@ -592,17 +597,17 @@
     suivant.addEventListener("click", () => {
         num_page += 1;
         indice += 25;
-        update();
         numeroPage += 1;
         num.innerHTML = numeroPage;
+        update();
         afficheBoutons();
     });
 
     precedent_f.addEventListener("click", () => {
         num_page_f -= 1;
         indice -= 25;
-        numeroPage -= 1;
-        num.innerHTML = numeroPage;
+        numeroPage_f -= 1;
+        num_f.innerHTML = numeroPage_f;
         update();
         afficheBoutonsFiltres();
     });
@@ -610,9 +615,9 @@
     suivant_f.addEventListener("click", () => {
         num_page_f += 1;
         indice += 25;
+        numeroPage_f += 1;
+        num_f.innerHTML = numeroPage_f;
         update();
-        numeroPage += 1;
-        num.innerHTML = numeroPage;
         afficheBoutonsFiltres();
     });
 
@@ -644,7 +649,8 @@
     var nom_form = null;
 
     function filtres(param1, param2) {
-        num_page.style.display = "none";
+        num.style.display = "none";
+        num_f.style.display = "block";
         if (param1.name == "continents") {
             cont_form = param2;
         }
@@ -659,7 +665,7 @@
         precedent.style.display = "none";
         suivant.style.display = "none";
 
-        cpt = 1;
+        cpt2 = 1;
         num_page_f = 1;
         viderTableau();
         afficherPays(cont_form, lang_form, nom_form);

@@ -166,6 +166,19 @@
             align-items: center;
         }
 
+        .infos div {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .infos h2 {
+            color: #e4e4e4;
+            font-family: sans-serif;
+            text-decoration: underline;
+        }
+
         .dPays {
             z-index: 9;
         }
@@ -203,11 +216,26 @@
     <div class="infosPays">
         <h1 class="nomPays"></h1>
         <div class="infos">
-            <span class="capPays"></span>
-            <span class="popPays"></span>
-            <span class="surfacePays"></span>
-            <span class="densitePays"></span>
-            <span class="continentPays"></span>
+            <div>
+                <h2>Capitale</h2>
+                <span class="capPays"></span>
+            </div>
+            <div>
+                <h2>Population</h2>
+                <span class="popPays"></span>
+            </div>
+            <div>
+                <h2>Surface</h2>
+                <span class="surfacePays"></span>
+            </div>
+            <div>
+                <h2>Densité</h2>
+                <span class="densitePays"></span>
+            </div>
+            <div>
+                <h2>Continent</h2>
+                <span class="continentPays"></span>
+            </div>
         </div>
         <img class="fermer_fen" src="croix.png" alt="Bouton Fermer" title="Femer la fenêtre" width="30px" height="30px">
     </div>

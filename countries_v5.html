@@ -584,15 +584,18 @@
 
         infosPays.style.display = "flex";
 
-        const pays = getPays(code);
-        const nom = pays._nom;
-        const capitale = pays._capitale;
-        const population = pays._population;
-        const surface = pays._superficie;
-        const densite = pays.getPopDensity();
-        const continent = pays._continent;
+        let pays = getPays(code);
+        let nom = pays._nom;
+        let capitale = pays._capitale;
+        let population = pays._population;
+        let surface = pays._superficie;
+        let densite = pays.getPopDensity();
+        let continent = pays._continent;
 
         nomPays.innerHTML = nom;
+        if(capitale == null) {
+            capitale = "Inconnu";
+        }
         capitalePays.innerHTML = capitale;
         popPays.innerHTML = population;
         surfacePays.innerHTML = surface + " km<sup>2</sup>";

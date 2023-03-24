@@ -241,6 +241,20 @@
             color: white;
             border: none;
             box-shadow: 0 0 3px black;
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+        }
+
+        .contfiltrage select:hover,
+        .languesfiltrage select:hover,
+        form button:hover,
+        .paysfiltrage input:hover {
+            background-color: #52586e;
+        }
+
+        form button:active,
+        .paysfiltrage input:active {
+            background-color: #616883;
         }
     </style>
 </head>
@@ -254,7 +268,7 @@
             <div class="contfiltrage">
                 <label for="continents">Choisissez un continent :</label>
                 <select id="continents" name="continents">
-                    <option value="">-- CHOISIR --</option>
+                    <option value="tout">-- CHOISIR --</option>
                 </select>
                 <button type="button"
                     onclick="filtres(document.querySelector('#continents'), document.querySelector('#continents').value)">OK</button>
@@ -263,7 +277,7 @@
             <div class="languesfiltrage">
                 <label for="langues">Choisissez une langue :</label>
                 <select id="langues" name="langues">
-                    <option value="">-- CHOISIR --</option>
+                    <option value="tout">-- CHOISIR --</option>
                 </select>
                 <button type="button"
                     onclick="filtres(document.querySelector('#langues'), document.querySelector('#langues').value)">OK</button>
@@ -459,6 +473,10 @@
             // Vérification des filtres
             if (continent_form != null || langue_form != null || nom_pays_form != null) {
 
+                if(continent_form == "tout" || langue_form == "tout" || nom_pays_form == "tout") {
+                    tbody.appendChild(tr);
+                    cpt++;
+                }
                 if (continent_form == all_countries[country]._continent || continent_form == null) {
 
                     for (let iLangue = 0; iLangue < all_countries[country].getLanguages().length; iLangue++) {
@@ -490,14 +508,13 @@
     function update() {
 
         for (let i = 0; i < templates.length; i++) {
-
             if (i < indice) {
                 templates[i].style.visibility = "collapse";
             }
-            if ((indice < i) && (i < indice + 26)) {
-                templates[i - 1].style.visibility = "visible";
+            if ((indice < i+1) && (i < indice + 27)) {
+                templates[i].style.visibility = "visible";
             }
-            if (i > indice + 24) {
+            if (i > indice + 25) {
                 templates[i].style.visibility = "collapse";
             }
         }
@@ -563,18 +580,28 @@
 
         infosPays.style.display = "flex";
 
-        const pays = getPays(code);
-        const nom = pays._nom;
-        const capitale = pays._capitale;
-        const population = pays._population;
-        const surface = pays._superficie;
-        const densite = pays.getPopDensity();
-        const continent = pays._continent;
+        let pays = getPays(code);
+        let nom = pays._nom;
+        let capitale = pays._capitale;
+        let population = pays._population;
+        let surface = pays._superficie;
+        let densite = pays.getPopDensity();
+        let continent = pays._continent;
 
         nomPays.innerHTML = nom;
+        if(capitale == null) {
+            capitale = "Inconnu";
+        }
         capitalePays.innerHTML = capitale;
         popPays.innerHTML = population;
-        surfacePays.innerHTML = surface + " km<sup>2</sup>";
+        if(surface == null) {
+            surfacePays.innerHTML = "Inconnu";
+        } else {
+            surfacePays.innerHTML = surface + " km<sup>2</sup>";
+        }
+        if(densite == null) {
+            densite = "Inconnu";
+        }
         densitePays.innerHTML = densite;
         continentPays.innerHTML = continent;
 
@@ -630,7 +657,7 @@
      */
     precedent.addEventListener("click", () => {
         num_page -= 1;
-        indice -= 25;
+        indice -= 26;
         numeroPage -= 1;
         num.innerHTML = numeroPage;
         update();
@@ -644,7 +671,7 @@
      */
     suivant.addEventListener("click", () => {
         num_page += 1;
-        indice += 25;
+        indice += 26;
         numeroPage += 1;
         num.innerHTML = numeroPage;
         update();
@@ -658,7 +685,7 @@
      */
     precedent_f.addEventListener("click", () => {
         num_page_f -= 1;
-        indice -= 25;
+        indice -= 26;
         numeroPage_f -= 1;
         num_f.innerHTML = numeroPage_f;
         update();
@@ -672,7 +699,7 @@
      */
     suivant_f.addEventListener("click", () => {
         num_page_f += 1;
-        indice += 25;
+        indice += 26;
         numeroPage_f += 1;
         num_f.innerHTML = numeroPage_f;
         update();
@@ -738,12 +765,17 @@
         precedent.style.display = "none";
         suivant.style.display = "none";
 
+        cpt = 1;
         cpt2 = 1;
         num_page_f = 1;
         viderTableau();
         afficherPays(cont_form, lang_form, nom_form);
         update();
-        afficheBoutonsFiltres();
+        if(param2 == "tout") {
+            afficheBoutons();
+        } else {
+            afficheBoutonsFiltres();
+        }
     }
 
     /**

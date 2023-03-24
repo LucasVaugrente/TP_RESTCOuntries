@@ -234,22 +234,17 @@
      * */
     function update() {
 
-        let ind = indice * num_page;
-
-        for (let i = 0; i < templates.length; i++) {
-
+        for (let i = 0; i < templates.length; i++) {            
             if (i < indice) {
                 templates[i].style.visibility = "collapse";
             }
-            if ((indice < i) && (i < indice+26)) {
-                templates[i-1].style.visibility = "visible";
+            if ((indice < i+1) && (i < indice + 27)) {
+                templates[i].style.visibility = "visible";
             }
-            if (i > indice + 24) {
+            if (i > indice + 25) {
                 templates[i].style.visibility = "collapse";
             }
         }
-
-        console.log("Page ", num_page);
     }
 
     /**
@@ -279,11 +274,9 @@
      */
     precedent.addEventListener("click", () => {
         num_page -= 1;
-        indice -= 25;
+        indice -= 26;
         numeroPage -= 1;
-        console.log(numeroPage);
         num.innerHTML = numeroPage;
-    
         update();
         afficheBoutons();
     });
@@ -295,18 +288,16 @@
      */
     suivant.addEventListener("click", () => {
         num_page += 1;
-        indice += 25;
-        update();
+        indice += 26;
         numeroPage += 1;
-        console.log(numeroPage);
         num.innerHTML = numeroPage;
+        update();
         afficheBoutons();
     });
 
     afficherPays(indice);
     update();
     num_page += 1;
-    console.log("Page", num_page);
     afficheBoutons();
 
 </script>

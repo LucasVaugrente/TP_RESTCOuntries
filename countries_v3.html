@@ -350,14 +350,13 @@
     function update() {
 
         for (let i = 0; i < templates.length; i++) {
-
             if (i < indice) {
                 templates[i].style.visibility = "collapse";
             }
-            if ((indice < i) && (i < indice + 26)) {
-                templates[i - 1].style.visibility = "visible";
+            if ((indice < i+1) && (i < indice + 27)) {
+                templates[i].style.visibility = "visible";
             }
-            if (i > indice + 24) {
+            if (i > indice + 25) {
                 templates[i].style.visibility = "collapse";
             }
         }
@@ -403,18 +402,28 @@
 
         infosPays.style.display = "flex";
 
-        const pays = getPays(code);
-        const nom = pays._nom;
-        const capitale = pays._capitale;
-        const population = pays._population;
-        const surface = pays._superficie;
-        const densite = pays.getPopDensity();
-        const continent = pays._continent;
+        let pays = getPays(code);
+        let nom = pays._nom;
+        let capitale = pays._capitale;
+        let population = pays._population;
+        let surface = pays._superficie;
+        let densite = pays.getPopDensity();
+        let continent = pays._continent;
 
         nomPays.innerHTML = nom;
+        if(capitale == null) {
+            capitale = "Inconnu";
+        }
         capitalePays.innerHTML = capitale;
         popPays.innerHTML = population;
-        surfacePays.innerHTML = surface + " km<sup>2</sup>";
+        if(surface == null) {
+            surfacePays.innerHTML = "Inconnu";
+        } else {
+            surfacePays.innerHTML = surface + " km<sup>2</sup>";
+        }
+        if(densite == null) {
+            densite = "Inconnu";
+        }
         densitePays.innerHTML = densite;
         continentPays.innerHTML = continent;
 
@@ -470,10 +479,9 @@
      */
     precedent.addEventListener("click", () => {
         num_page -= 1;
-        indice -= 25;
+        indice -= 26;
         numeroPage -= 1;
         num.innerHTML = numeroPage;
-
         update();
         afficheBoutons();
     });
@@ -485,7 +493,7 @@
      */
     suivant.addEventListener("click", () => {
         num_page += 1;
-        indice += 25;
+        indice += 26;
         update();
         numeroPage += 1;
         num.innerHTML = numeroPage;

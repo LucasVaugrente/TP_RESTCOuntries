@@ -39,7 +39,7 @@ function moreNeighbors() {
         }
     }
     console.log("Pays ayant le plus de voisins -> " + res.toString());
-    console.log("Ses voisins : ");
+    console.log(`Ses voisins : `);
     for (let i = 0; i < voisins.length; i++) {
         console.log("   " + voisins[i].toString());
     }
@@ -57,7 +57,7 @@ function neighborless() {
             res.push(all_countries[country]);
         }
     }
-    console.log("Pays n'ayant aucun voisin : ");
+    console.log(`Pays n'ayant aucun voisin : (${res.length} pays)`);
     for (let i = 0; i < res.length; i++) {
         console.log("   " + res[i].toString());
     }
@@ -226,7 +226,7 @@ function sortingDecreasingDensity() {
     }
     
 }
-sortingDecreasingDensity();
+//sortingDecreasingDensity();
 
 // Question 8
 function moreTopLevelDomains() {
@@ -240,7 +240,7 @@ function moreTopLevelDomains() {
         } 
     }
 }
-//moreTopLevelDomains();
+moreTopLevelDomains();
 
 // Question 9
 function veryLongTrip(nom_pays){

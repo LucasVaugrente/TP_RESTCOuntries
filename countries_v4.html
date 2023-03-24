@@ -241,6 +241,20 @@
             color: white;
             border: none;
             box-shadow: 0 0 3px black;
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+        }
+
+        .contfiltrage select:hover,
+        .languesfiltrage select:hover,
+        form button:hover,
+        .paysfiltrage input:hover {
+            background-color: #52586e;
+        }
+
+        form button:active,
+        .paysfiltrage input:active {
+            background-color: #616883;
         }
     </style>
 </head>
@@ -254,7 +268,7 @@
             <div class="contfiltrage">
                 <label for="continents">Choisissez un continent :</label>
                 <select id="continents" name="continents">
-                    <option value="">-- CHOISIR --</option>
+                    <option value="tout">-- CHOISIR --</option>
                 </select>
                 <button type="button"
                     onclick="filtres(document.querySelector('#continents'), document.querySelector('#continents').value)">OK</button>
@@ -263,7 +277,7 @@
             <div class="languesfiltrage">
                 <label for="langues">Choisissez une langue :</label>
                 <select id="langues" name="langues">
-                    <option value="">-- CHOISIR --</option>
+                    <option value="tout">-- CHOISIR --</option>
                 </select>
                 <button type="button"
                     onclick="filtres(document.querySelector('#langues'), document.querySelector('#langues').value)">OK</button>
@@ -459,6 +473,10 @@
             // Vérification des filtres
             if (continent_form != null || langue_form != null || nom_pays_form != null) {
 
+                if(continent_form == "tout" || langue_form == "tout" || nom_pays_form == "tout") {
+                    tbody.appendChild(tr);
+                    cpt++;
+                }
                 if (continent_form == all_countries[country]._continent || continent_form == null) {
 
                     for (let iLangue = 0; iLangue < all_countries[country].getLanguages().length; iLangue++) {
@@ -747,12 +765,17 @@
         precedent.style.display = "none";
         suivant.style.display = "none";
 
+        cpt = 1;
         cpt2 = 1;
         num_page_f = 1;
         viderTableau();
         afficherPays(cont_form, lang_form, nom_form);
         update();
-        afficheBoutonsFiltres();
+        if(param2 == "tout") {
+            afficheBoutons();
+        } else {
+            afficheBoutonsFiltres();
+        }
     }
 
     /**

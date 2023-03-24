@@ -512,14 +512,13 @@
     function update() {
 
         for (let i = 0; i < templates.length; i++) {
-
             if (i < indice) {
                 templates[i].style.visibility = "collapse";
             }
-            if ((indice < i) && (i < indice + 25)) {
-                templates[i - 1].style.visibility = "visible";
+            if ((indice < i+1) && (i < indice + 27)) {
+                templates[i].style.visibility = "visible";
             }
-            if (i > indice + 24) {
+            if (i > indice + 25) {
                 templates[i].style.visibility = "collapse";
             }
         }
@@ -652,7 +651,7 @@
      */
     precedent.addEventListener("click", () => {
         num_page -= 1;
-        indice -= 25;
+        indice -= 26;
         numeroPage -= 1;
         num.innerHTML = numeroPage;
         update();
@@ -666,7 +665,7 @@
      */
     suivant.addEventListener("click", () => {
         num_page += 1;
-        indice += 25;
+        indice += 26;
         numeroPage += 1;
         num.innerHTML = numeroPage;
         update();
@@ -680,7 +679,7 @@
      */
     precedent_f.addEventListener("click", () => {
         num_page_f -= 1;
-        indice -= 25;
+        indice -= 26;
         numeroPage_f -= 1;
         num_f.innerHTML = numeroPage_f;
         update();
@@ -694,7 +693,7 @@
      */
     suivant_f.addEventListener("click", () => {
         num_page_f += 1;
-        indice += 25;
+        indice += 26;
         numeroPage_f += 1;
         num_f.innerHTML = numeroPage_f;
         update();

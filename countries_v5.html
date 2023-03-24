@@ -598,7 +598,14 @@
         }
         capitalePays.innerHTML = capitale;
         popPays.innerHTML = population;
-        surfacePays.innerHTML = surface + " km<sup>2</sup>";
+        if(surface == null) {
+            surfacePays.innerHTML = "Inconnu";
+        } else {
+            surfacePays.innerHTML = surface + " km<sup>2</sup>";
+        }
+        if(densite == null) {
+            densite = "Inconnu";
+        }
         densitePays.innerHTML = densite;
         continentPays.innerHTML = continent;
 

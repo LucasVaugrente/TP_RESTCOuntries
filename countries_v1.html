@@ -104,12 +104,6 @@
     let cpt = 1;
 
     for (const country in all_countries) {
-        if (all_countries[country].getPopDensity() == Infinity) {
-            console.log(all_countries[country]);
-        }
-    }
-
-    for (const country in all_countries) {
 
         let num = document.createElement("td");
         let nom = document.createElement("td");
@@ -146,7 +140,7 @@
         }
 
         // Densité du pays
-        if (all_countries[country].getPopDensity() != Infinity) {
+        if (all_countries[country].getPopDensity() != null) {
             densite.innerHTML = all_countries[country].getPopDensity();
             tr.appendChild(densite);
         } else {

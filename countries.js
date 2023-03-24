@@ -20548,7 +20548,7 @@ class Country {
   }
 
   getPopDensity() {
-    if(this._population == null || this._superficie == null){
+    if (this._population == null || this._superficie == null) {
       return null;
     }
     return this._population / this._superficie;
@@ -20886,10 +20886,5 @@ function fill_db() {
   return;
 }
 
-
-
-
-
 fill_db();
 deleteUndefinedCountries();
-// console.log(all_currencies);

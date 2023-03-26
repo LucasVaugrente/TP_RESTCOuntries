@@ -643,6 +643,13 @@
                     itemsArr[i] = itemsArr[j];
                     itemsArr[j] = tempStr;
                 }
+                else if (itemsArr[j].children[5].innerHTML == itemsArr[i].children[5].innerHTML) {
+                    if (itemsArr[j].children[1].innerHTML < itemsArr[i].children[1].innerHTML) {
+                        var tempStr = itemsArr[i];
+                        itemsArr[i] = itemsArr[j];
+                        itemsArr[j] = tempStr;
+                    }
+                } 
                 j++;
             }
             i++;

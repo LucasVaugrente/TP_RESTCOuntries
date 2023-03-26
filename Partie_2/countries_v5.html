@@ -100,7 +100,7 @@
 
 </body>
 
-<script src="countries.js"></script>
+<script src="../countries.js"></script>
 <script>
 
     var tbody = document.querySelector('tbody');
@@ -520,7 +520,7 @@
 
         if (param2 == "tout_cont") {
             cont_form = null;
-        } else if(param2 == "tout_lan") {
+        } else if (param2 == "tout_lan") {
             lang_form = null;
         }
 
@@ -530,7 +530,7 @@
         afficherPays(cont_form, lang_form, nom_form);
         update();
 
-        if(cont_form == null && lang_form == null && nom_form == null) {
+        if (cont_form == null && lang_form == null && nom_form == null) {
             afficheBoutons();
             suivant_f.style.display = "none";
         }
@@ -560,8 +560,20 @@
                 itemsArr.push(tbody.childNodes[i]);
             }
         }
-        itemsArr.sort((a, b) => a.children[0].innerHTML - b.children[0].innerHTML);
-
+        var i = 0;
+        var j;
+        while (i < itemsArr.length) {
+            j = i + 1;
+            while (j < itemsArr.length) {
+                if (itemsArr[j].children[1].innerHTML < itemsArr[i].children[1].innerHTML) {
+                    var tempStr = itemsArr[i]
+                    itemsArr[i] = itemsArr[j];
+                    itemsArr[j] = tempStr;
+                }
+                j++;
+            }
+            i++;
+        }
         for (i = 0; i < itemsArr.length; ++i) {
             tbody.appendChild(itemsArr[i]);
         }
@@ -621,14 +633,26 @@
                 itemsArr.push(tbody.childNodes[i]);
             }
         }
-        itemsArr.sort((a, b) => a.children[5].innerHTML - b.children[5].innerHTML);
+        var i = 0;
+        var j;
+        while (i < itemsArr.length) {
+            j = i + 1;
+            while (j < itemsArr.length) {
+                if (itemsArr[j].children[5].innerHTML < itemsArr[i].children[5].innerHTML) {
+                    var tempStr = itemsArr[i];
+                    itemsArr[i] = itemsArr[j];
+                    itemsArr[j] = tempStr;
+                }
+                j++;
+            }
+            i++;
+        }
 
         for (i = 0; i < itemsArr.length; ++i) {
             tbody.appendChild(itemsArr[i]);
         }
         update();
     }
-
 
     // Ajout du style pour voir quel champ a été sélectionné (TRI)
     var thNom = document.querySelector('.thNom');

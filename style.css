@@ -255,6 +255,7 @@ form button,
     color: white;
     border: none;
     box-shadow: 0 0 3px black;
+    transition: all 0.2s ease-in-out;
 }
 
 .contfiltrage select,

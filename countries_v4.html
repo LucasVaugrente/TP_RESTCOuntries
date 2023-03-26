@@ -18,7 +18,7 @@
             <div class="contfiltrage">
                 <label for="continents">Choisissez un continent :</label>
                 <select id="continents" name="continents">
-                    <option value="tout">-- CHOISIR --</option>
+                    <option value="tout_cont">-- CHOISIR --</option>
                 </select>
                 <button type="button"
                     onclick="filtres(document.querySelector('#continents'), document.querySelector('#continents').value)">OK</button>
@@ -27,7 +27,7 @@
             <div class="languesfiltrage">
                 <label for="langues">Choisissez une langue :</label>
                 <select id="langues" name="langues">
-                    <option value="tout">-- CHOISIR --</option>
+                    <option value="tout_lan">-- CHOISIR --</option>
                 </select>
                 <button type="button"
                     onclick="filtres(document.querySelector('#langues'), document.querySelector('#langues').value)">OK</button>
@@ -93,8 +93,10 @@
 
     <button class="precedent_filtres">PRÉC</button>
     <button class="precedent">PRÉC</button>
+
     <span class="num_page">1</span>
     <span class="num_page_f">1</span>
+
     <button class="suivant">SUIV</button>
     <button class="suivant_filtres">SUIV</button>
 
@@ -104,7 +106,6 @@
 <script>
 
     var tbody = document.querySelector('tbody');
-    var trs = tbody.querySelectorAll('tr');
 
     var num = document.querySelector(".num_page");
     var numeroPage = parseInt(num.innerHTML);
@@ -118,7 +119,6 @@
     let suivant = document.querySelector(".suivant");
     let precedent_f = document.querySelector(".precedent_filtres");
     let suivant_f = document.querySelector(".suivant_filtres");
-    let page = document.querySelector(".num_page");
 
     let contFiltre = document.getElementById("continents");
     let languesfiltre = document.getElementById("langues");
@@ -150,8 +150,6 @@
     }
 
     var indice = 0;
-    var num_page = 0;
-    var num_page_f = 0;
     var cpt = 1;
     var cpt2 = 1;
 
@@ -223,7 +221,7 @@
             // Vérification des filtres
             if (continent_form != null || langue_form != null || nom_pays_form != null) {
 
-                if(continent_form == "tout" || langue_form == "tout" || nom_pays_form == "tout") {
+                if (continent_form == "tout" || langue_form == "tout" || nom_pays_form == "tout") {
                     tbody.appendChild(tr);
                     cpt++;
                 }
@@ -232,7 +230,8 @@
                     for (let iLangue = 0; iLangue < all_countries[country].getLanguages().length; iLangue++) {
 
                         if (all_countries[country].getLanguages()[iLangue]._iso639_2 == langue_form || langue_form == null) {
-                            if (all_countries[country]._nom.includes(nom_pays_form) || nom_pays_form == null) {
+
+                            if (nom_pays_form == null || all_countries[country]._nom.toUpperCase() == nom_pays_form.toUpperCase()) {
                                 if (!tbody.contains(tr)) {
                                     tbody.appendChild(tr);
                                     cpt2++;
@@ -261,7 +260,7 @@
             if (i < indice) {
                 templates[i].style.visibility = "collapse";
             }
-            if ((indice < i+1) && (i < indice + 27)) {
+            if ((indice < i + 1) && (i < indice + 27)) {
                 templates[i].style.visibility = "visible";
             }
             if (i > indice + 25) {
@@ -278,13 +277,13 @@
      * 
      * */
     function afficheBoutons() {
-        if (num_page <= 1) {
+        if (numeroPage <= 1) {
             precedent.style.display = "none";
         } else {
             precedent.style.display = "block";
         }
 
-        if (num_page >= cpt / 25) {
+        if (numeroPage >= cpt / 26) {
             suivant.style.display = "none";
         } else {
             suivant.style.display = "block";
@@ -299,12 +298,12 @@
      * 
      * */
     function afficheBoutonsFiltres() {
-        if (num_page_f <= 1) {
+        if (numeroPage_f < 2) {
             precedent_f.style.display = "none";
         } else {
             precedent_f.style.display = "block";
         }
-        if (num_page_f >= cpt2 / 25) {
+        if (numeroPage_f >= cpt2 / 26) {
             suivant_f.style.display = "none";
         } else {
             suivant_f.style.display = "block";
@@ -339,17 +338,17 @@
         let continent = pays._continent;
 
         nomPays.innerHTML = nom;
-        if(capitale == null) {
+        if (capitale == null) {
             capitale = "Inconnu";
         }
         capitalePays.innerHTML = capitale;
         popPays.innerHTML = population;
-        if(surface == null) {
+        if (surface == null) {
             surfacePays.innerHTML = "Inconnu";
         } else {
             surfacePays.innerHTML = surface + " km<sup>2</sup>";
         }
-        if(densite == null) {
+        if (densite == null) {
             densite = "Inconnu";
         }
         densitePays.innerHTML = densite;
@@ -406,7 +405,6 @@
      * 
      */
     precedent.addEventListener("click", () => {
-        num_page -= 1;
         indice -= 26;
         numeroPage -= 1;
         num.innerHTML = numeroPage;
@@ -420,7 +418,6 @@
      * 
      */
     suivant.addEventListener("click", () => {
-        num_page += 1;
         indice += 26;
         numeroPage += 1;
         num.innerHTML = numeroPage;
@@ -434,7 +431,6 @@
      * 
      */
     precedent_f.addEventListener("click", () => {
-        num_page_f -= 1;
         indice -= 26;
         numeroPage_f -= 1;
         num_f.innerHTML = numeroPage_f;
@@ -448,7 +444,6 @@
      * 
      */
     suivant_f.addEventListener("click", () => {
-        num_page_f += 1;
         indice += 26;
         numeroPage_f += 1;
         num_f.innerHTML = numeroPage_f;
@@ -458,7 +453,6 @@
 
     afficherPays(null, null, null);
     update();
-    num_page += 1;
     afficheBoutons();
 
     /**
@@ -499,8 +493,10 @@
      * 
      */
     function filtres(param1, param2) {
+
         num.style.display = "none";
         num_f.style.display = "block";
+
         if (param1.name == "continents") {
             cont_form = param2;
         }
@@ -517,15 +513,32 @@
 
         cpt = 1;
         cpt2 = 1;
-        num_page_f = 1;
+        indice = 0;
+        numeroPage_f = 1;
+        numeroPage = 1;
+        num_f.innerHTML = numeroPage_f;
+        num.innerHTML = numeroPage;
+
+        if (param2 == "tout_cont") {
+            cont_form = null;
+        } else if(param2 == "tout_lan") {
+            lang_form = null;
+        }
+
+        precedent_f.style.display = "none";
+
         viderTableau();
         afficherPays(cont_form, lang_form, nom_form);
         update();
-        if(param2 == "tout") {
+
+        if(cont_form == null && lang_form == null && nom_form == null) {
             afficheBoutons();
-        } else {
+            suivant_f.style.display = "none";
+        }
+        else {
             afficheBoutonsFiltres();
         }
+        
     }
 
     /**

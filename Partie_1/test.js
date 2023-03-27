@@ -17,7 +17,6 @@ function outsideTheContinent() {
 }
 //outsideTheContinent();
 
-
 /**Question 2
  *
  * Pays (possibilité de plusieurs) ayant le plus grand nombre de voisins. Achez aussi les voisins
@@ -240,7 +239,7 @@ function moreTopLevelDomains() {
         } 
     }
 }
-moreTopLevelDomains();
+//moreTopLevelDomains();
 
 // Question 9
 function veryLongTrip(nom_pays){
@@ -286,4 +285,4 @@ function veryLongTrip(nom_pays){
         console.log(`- ${Countrie}`);
     }
 }
-//veryLongTrip("France");
+veryLongTrip("France");

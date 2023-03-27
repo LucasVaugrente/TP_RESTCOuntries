@@ -15,13 +15,20 @@ if(!xhr) {
 function process () {
     if (xhr.readyState == 4) {
         if (xhr.status == 200) {
-            //alert("Ca marche : le  serveur a repondu !");
             countries = JSON.parse(xhr.responseText);
-            console.log(countries);
 
-            console.log("----------------");
+            //Remplissage du tableau
             fill_db();
-            //deleteUndefinedCountries();
+            deleteUndefinedCountries();
+
+            // Affichage des pays
+            afficherPays(null, null, null);
+            update();
+            num_page += 1;
+            afficheBoutons();
+            
+            //Création des filtres
+            CreationFiltre();
         } else {
             alert("Erreur retour requete XML HTTP : "+xhr.status);
         }

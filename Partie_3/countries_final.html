@@ -121,32 +121,6 @@
     let contFiltre = document.getElementById("continents");
     let languesfiltre = document.getElementById("langues");
 
-    // Filtres Continents Remplissage
-    let tab_cont = [];
-    for (const country in all_countries) {
-        if (!tab_cont.includes(all_countries[country]._continent)) {
-            let option = document.createElement("option");
-            option.innerHTML = all_countries[country]._continent;
-            option.setAttribute("value", all_countries[country]._continent);
-
-            contFiltre.appendChild(option);
-            tab_cont.push(all_countries[country]._continent);
-        }
-    }
-
-    // Filtres Langues Remplissage
-    let tab_lan = [];
-    for (const langue in all_languages) {
-        if (!tab_lan.includes(all_languages[langue]._name)) {
-            let option = document.createElement("option");
-            option.innerHTML = all_languages[langue]._name;
-            option.setAttribute("value", all_languages[langue]._iso639_2);
-
-            languesfiltre.appendChild(option);
-            tab_lan.push(all_languages[langue]._name)
-        }
-    }
-
     var indice = 0;
     var num_page = 0;
     var num_page_f = 0;
@@ -441,11 +415,6 @@
         afficheBoutonsFiltres();
     });
 
-    afficherPays(null, null, null);
-    update();
-    num_page += 1;
-    afficheBoutons();
-
     /**
      *
      * Fonction de Design lors du hover de la souris sur une template tr 
@@ -457,6 +426,7 @@
             cells[i].style.backgroundColor = "#3d4155";
         }
     }
+    
     function nodesignOver(row) {
         var cells = row.getElementsByTagName("td");
         for (var i = 0; i < cells.length; i++) {
@@ -521,10 +491,43 @@
         }
     }
 
+    /**
+     * 
+     * Fonction qui remplie les filtres
+     * 
+     * */
+    function CreationFiltre(){
+        // Filtres Continents Remplissage
+        let tab_cont = [];
+            for (const country in all_countries) {
+                if (!tab_cont.includes(all_countries[country]._continent)) {
+                    let option = document.createElement("option");
+                    option.innerHTML = all_countries[country]._continent;
+                    option.setAttribute("value", all_countries[country]._continent);
+
+                    contFiltre.appendChild(option);
+                    tab_cont.push(all_countries[country]._continent);
+                }
+            }
+
+        // Filtres Langues Remplissage
+        let tab_lan = [];
+        for (const langue in all_languages) {
+            if (!tab_lan.includes(all_languages[langue]._name)) {
+                let option = document.createElement("option");
+                option.innerHTML = all_languages[langue]._name;
+                option.setAttribute("value", all_languages[langue]._iso639_2);
+
+                languesfiltre.appendChild(option);
+                tab_lan.push(all_languages[langue]._name)
+            }
+        }
+    }
+    
+
 
     /* ###################### FONCTIONS TRI ###################### */
-
-
+    
     function trier_Nom() {
         var itemsArr = [];
         for (var i in tbody.childNodes) {
@@ -588,7 +591,6 @@
 
     function trier_Continent() { }
 
-
     // Ajout du style pour voir quel champ a été sélectionné (TRI)
     var thNom = document.querySelector('.thNom');
     var thPop = document.querySelector('.thPop');
@@ -638,4 +640,4 @@
 
 </script>
 
-</html
+</html>

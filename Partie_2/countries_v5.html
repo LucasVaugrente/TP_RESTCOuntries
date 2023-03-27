@@ -6,257 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pays TP REST Countries</title>
-    <style>
-        body {
-            margin: 5% 10%;
-            background-color: #141b33;
-        }
-
-        h1 {
-            font-family: sans-serif;
-            color: white;
-            text-align: center;
-            text-transform: uppercase;
-        }
-
-        tbody {
-            border-end-start-radius: 20px;
-        }
-
-        table {
-            width: 100%;
-            height: max-content;
-            margin-bottom: 20px;
-            font-family: sans-serif;
-            box-shadow: 0 3px 5px black;
-            border: none;
-            border-radius: 1em;
-        }
-
-        thead {
-            position: sticky;
-            top: -1px;
-            z-index: 10;
-        }
-
-        th,
-        td {
-            text-align: left;
-            padding: 1em;
-        }
-
-        th {
-            background-color: #20273d;
-            font-weight: bold;
-            color: rgb(223, 223, 223);
-            border: solid 0 #161d35;
-        }
-
-        td {
-            background-color: #43485c;
-            height: max-content;
-            border: solid 0 #20273d;
-            color: rgb(223, 223, 223);
-            transition: all 0.2s ease-in-out;
-        }
-
-        tr:nth-child(even) {
-            background-color: #f2f2f2;
-        }
-
-        .url {
-            display: flex;
-            justify-content: center;
-        }
-
-        tr img {
-            width: 150px;
-            display: flex;
-            justify-content: center;
-        }
-
-        .template:hover {
-            cursor: pointer;
-            background-color: #141b33;
-        }
-
-        .precedent,
-        .precedent_filtres,
-        .suivant,
-        .suivant_filtres {
-            position: fixed;
-            bottom: 1em;
-            font-size: 1em;
-            font-family: sans-serif;
-            padding: 1em 2em;
-            border-radius: 10px;
-            border: none;
-            box-shadow: 0 0 5px black;
-            color: white;
-            background-color: #3a4054;
-            cursor: pointer;
-            transition: all 0.1s ease-in-out;
-        }
-
-        .precedent_filtres,
-        .suivant_filtres {
-            display: none;
-        }
-
-        .precedent:hover,
-        .precedent_filtres:hover,
-        .suivant:hover,
-        .suivant_filtres:hover {
-            opacity: 0.8;
-        }
-
-        .precedent:active,
-        .precedent_filtres:hover,
-        .suivant:active,
-        .suivant_filtres:hover {
-            background-color: #20273d;
-        }
-
-        .precedent,
-        .precedent_filtres {
-            left: 2em;
-        }
-
-        .suivant,
-        .suivant_filtres {
-            right: 2em;
-        }
-
-        .num_page,
-        .num_page_f {
-            display: block;
-            margin-top: 1em;
-            color: white;
-            font-weight: 600;
-            font-family: sans-serif;
-            font-size: 2em;
-            text-align: center;
-        }
-
-        .num_page_f {
-            display: none;
-        }
-
-        .infosPays,
-        .drapeauPays {
-            display: none;
-            position: fixed;
-            top: 25%;
-            left: 20%;
-            width: 45%;
-            padding: 5em 10em;
-            background-color: #20273d;
-            border-radius: 20px;
-            box-shadow: 0 0 10px black;
-            flex-direction: column;
-            align-items: center;
-            z-index: 20;
-        }
-
-        .drapeauPays {
-            top: 20%;
-        }
-
-        .infosPays span,
-        .infosPays h1 {
-            color: #f2f2f2;
-            font-family: sans-serif;
-        }
-
-        .infosPays h1 {
-            margin-bottom: 2em;
-        }
-
-        .infosPays span {
-            margin: 0 3em;
-            font-size: 1.2em;
-            width: max-content;
-        }
-
-        .infos {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .infos div {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .infos h2 {
-            color: #e4e4e4;
-            font-family: sans-serif;
-            text-decoration: underline;
-        }
-
-        .dPays {
-            z-index: 9;
-        }
-
-        .fermer_fen,
-        .fermer_fen2 {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            font-size: 1.5rem;
-            font-weight: bold;
-            cursor: pointer;
-        }
-
-        .filtrages form {
-            padding: 2em;
-            margin: 1em 0;
-            background-color: #20273d;
-            border-radius: 10px;
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            box-shadow: 0 2px 5px black;
-        }
-
-        .contfiltrage,
-        .languesfiltrage,
-        .paysfiltrage {
-            font-family: sans-serif;
-            color: white;
-            font-size: 1.1em;
-        }
-
-        .contfiltrage select,
-        .languesfiltrage select,
-        form button,
-        .paysfiltrage input {
-            padding: 0.7em;
-            border-radius: 10px;
-            font-weight: 600;
-            background-color: #43485c;
-            color: white;
-            border: none;
-            box-shadow: 0 0 3px black;
-            cursor: pointer;
-            transition: all 0.2s ease-in-out;
-        }
-
-        .contfiltrage select:hover,
-        .languesfiltrage select:hover,
-        form button:hover,
-        .paysfiltrage input:hover {
-            background-color: #52586e;
-        }
-
-        form button:active,
-        .paysfiltrage input:active {
-            background-color: #616883;
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
@@ -268,7 +18,7 @@
             <div class="contfiltrage">
                 <label for="continents">Choisissez un continent :</label>
                 <select id="continents" name="continents">
-                    <option value="tout">-- CHOISIR --</option>
+                    <option value="">-- CHOISIR --</option>
                 </select>
                 <button type="button"
                     onclick="filtres(document.querySelector('#continents'), document.querySelector('#continents').value)">OK</button>
@@ -277,7 +27,7 @@
             <div class="languesfiltrage">
                 <label for="langues">Choisissez une langue :</label>
                 <select id="langues" name="langues">
-                    <option value="tout">-- CHOISIR --</option>
+                    <option value="">-- CHOISIR --</option>
                 </select>
                 <button type="button"
                     onclick="filtres(document.querySelector('#langues'), document.querySelector('#langues').value)">OK</button>
@@ -295,13 +45,13 @@
     <table>
         <thead>
             <tr>
-                <th>Pays</th>
-                <th>Nom</th>
-                <th>Population</th>
-                <th>Surface</th>
-                <th>Densité (Population)</th>
-                <th>Continent</th>
-                <th>Drapeau</th>
+                <th class="thId" tabindex="1">Pays</th>
+                <th class="thNom" tabindex="1" onclick="trier_Nom()">Nom</th>
+                <th class="thPop" tabindex="1" onclick="trier_Pop()">Population</th>
+                <th class="thSurf" tabindex="1" onclick="trier_Surface()">Surface</th>
+                <th class="thDens" tabindex="1" onclick="trier_Dens()">Densité (Population)</th>
+                <th class="thCont" tabindex="1" onclick="trier_Continent()">Continent</th>
+                <th class="thDrapeau" tabindex="1">Drapeau</th>
             </tr>
         </thead>
         <tbody>
@@ -350,11 +100,10 @@
 
 </body>
 
-<script src="countries.js"></script>
+<script src="../countries.js"></script>
 <script>
 
     var tbody = document.querySelector('tbody');
-    var trs = tbody.querySelectorAll('tr');
 
     var num = document.querySelector(".num_page");
     var numeroPage = parseInt(num.innerHTML);
@@ -400,8 +149,6 @@
     }
 
     var indice = 0;
-    var num_page = 0;
-    var num_page_f = 0;
     var cpt = 1;
     var cpt2 = 1;
 
@@ -473,7 +220,7 @@
             // Vérification des filtres
             if (continent_form != null || langue_form != null || nom_pays_form != null) {
 
-                if(continent_form == "tout" || langue_form == "tout" || nom_pays_form == "tout") {
+                if (continent_form == "tout" || langue_form == "tout" || nom_pays_form == "tout") {
                     tbody.appendChild(tr);
                     cpt++;
                 }
@@ -482,7 +229,8 @@
                     for (let iLangue = 0; iLangue < all_countries[country].getLanguages().length; iLangue++) {
 
                         if (all_countries[country].getLanguages()[iLangue]._iso639_2 == langue_form || langue_form == null) {
-                            if (all_countries[country]._nom.includes(nom_pays_form) || nom_pays_form == null) {
+
+                            if (nom_pays_form == null || all_countries[country]._nom.toUpperCase() == nom_pays_form.toUpperCase()) {
                                 if (!tbody.contains(tr)) {
                                     tbody.appendChild(tr);
                                     cpt2++;
@@ -511,7 +259,7 @@
             if (i < indice) {
                 templates[i].style.visibility = "collapse";
             }
-            if ((indice < i+1) && (i < indice + 27)) {
+            if ((indice < i + 1) && (i < indice + 27)) {
                 templates[i].style.visibility = "visible";
             }
             if (i > indice + 25) {
@@ -528,13 +276,13 @@
      * 
      * */
     function afficheBoutons() {
-        if (num_page <= 1) {
+        if (numeroPage <= 1) {
             precedent.style.display = "none";
         } else {
             precedent.style.display = "block";
         }
 
-        if (num_page >= cpt / 25) {
+        if (numeroPage >= cpt / 26) {
             suivant.style.display = "none";
         } else {
             suivant.style.display = "block";
@@ -549,12 +297,12 @@
      * 
      * */
     function afficheBoutonsFiltres() {
-        if (num_page_f <= 1) {
+        if (numeroPage_f < 2) {
             precedent_f.style.display = "none";
         } else {
             precedent_f.style.display = "block";
         }
-        if (num_page_f >= cpt2 / 25) {
+        if (numeroPage_f >= cpt2 / 26) {
             suivant_f.style.display = "none";
         } else {
             suivant_f.style.display = "block";
@@ -589,17 +337,17 @@
         let continent = pays._continent;
 
         nomPays.innerHTML = nom;
-        if(capitale == null) {
+        if (capitale == null) {
             capitale = "Inconnu";
         }
         capitalePays.innerHTML = capitale;
         popPays.innerHTML = population;
-        if(surface == null) {
+        if (surface == null) {
             surfacePays.innerHTML = "Inconnu";
         } else {
             surfacePays.innerHTML = surface + " km<sup>2</sup>";
         }
-        if(densite == null) {
+        if (densite == null) {
             densite = "Inconnu";
         }
         densitePays.innerHTML = densite;
@@ -656,7 +404,6 @@
      * 
      */
     precedent.addEventListener("click", () => {
-        num_page -= 1;
         indice -= 26;
         numeroPage -= 1;
         num.innerHTML = numeroPage;
@@ -670,7 +417,6 @@
      * 
      */
     suivant.addEventListener("click", () => {
-        num_page += 1;
         indice += 26;
         numeroPage += 1;
         num.innerHTML = numeroPage;
@@ -684,7 +430,6 @@
      * 
      */
     precedent_f.addEventListener("click", () => {
-        num_page_f -= 1;
         indice -= 26;
         numeroPage_f -= 1;
         num_f.innerHTML = numeroPage_f;
@@ -698,7 +443,6 @@
      * 
      */
     suivant_f.addEventListener("click", () => {
-        num_page_f += 1;
         indice += 26;
         numeroPage_f += 1;
         num_f.innerHTML = numeroPage_f;
@@ -708,7 +452,6 @@
 
     afficherPays(null, null, null);
     update();
-    num_page += 1;
     afficheBoutons();
 
     /**
@@ -749,8 +492,10 @@
      * 
      */
     function filtres(param1, param2) {
+
         num.style.display = "none";
         num_f.style.display = "block";
+
         if (param1.name == "continents") {
             cont_form = param2;
         }
@@ -767,13 +512,29 @@
 
         cpt = 1;
         cpt2 = 1;
-        num_page_f = 1;
+        indice = 0;
+        numeroPage_f = 1;
+        numeroPage = 1;
+        num_f.innerHTML = numeroPage_f;
+        num.innerHTML = numeroPage;
+
+        if (param2 == "tout_cont") {
+            cont_form = null;
+        } else if (param2 == "tout_lan") {
+            lang_form = null;
+        }
+
+        precedent_f.style.display = "none";
+
         viderTableau();
         afficherPays(cont_form, lang_form, nom_form);
         update();
-        if(param2 == "tout") {
+
+        if (cont_form == null && lang_form == null && nom_form == null) {
             afficheBoutons();
-        } else {
+            suivant_f.style.display = "none";
+        }
+        else {
             afficheBoutonsFiltres();
         }
     }
@@ -788,6 +549,164 @@
             tbody.children[0].remove();
         }
     }
+
+
+    /* ###################### FONCTIONS TRI ###################### */
+
+    function trier_Nom() {
+        var itemsArr = [];
+        for (var i in tbody.childNodes) {
+            if (tbody.childNodes[i].nodeType == 1) {
+                itemsArr.push(tbody.childNodes[i]);
+            }
+        }
+        var i = 0;
+        var j;
+        while (i < itemsArr.length) {
+            j = i + 1;
+            while (j < itemsArr.length) {
+                if (itemsArr[j].children[1].innerHTML < itemsArr[i].children[1].innerHTML) {
+                    var tempStr = itemsArr[i]
+                    itemsArr[i] = itemsArr[j];
+                    itemsArr[j] = tempStr;
+                }
+                j++;
+            }
+            i++;
+        }
+        for (i = 0; i < itemsArr.length; ++i) {
+            tbody.appendChild(itemsArr[i]);
+        }
+        update();
+    }
+
+    function trier_Pop() {
+        var itemsArr = [];
+        for (var i in tbody.childNodes) {
+            if (tbody.childNodes[i].nodeType == 1) {
+                itemsArr.push(tbody.childNodes[i]);
+            }
+        }
+        itemsArr.sort((a, b) => a.children[2].innerHTML - b.children[2].innerHTML);
+
+        for (i = 0; i < itemsArr.length; ++i) {
+            tbody.appendChild(itemsArr[i]);
+        }
+        update();
+    }
+
+    function trier_Surface() {
+        var itemsArr = [];
+        for (var i in tbody.childNodes) {
+            if (tbody.childNodes[i].nodeType == 1) {
+                itemsArr.push(tbody.childNodes[i]);
+            }
+        }
+
+        itemsArr.sort((a, b) => a.children[3].innerHTML.slice(0, a.children[3].innerHTML.length - 15) - b.children[3].innerHTML.slice(0, b.children[3].innerHTML.length - 15));
+
+        for (i = 0; i < itemsArr.length; ++i) {
+            tbody.appendChild(itemsArr[i]);
+        }
+        update();
+    }
+
+    function trier_Dens() {
+        var itemsArr = [];
+        for (var i in tbody.childNodes) {
+            if (tbody.childNodes[i].nodeType == 1) {
+                itemsArr.push(tbody.childNodes[i]);
+            }
+        }
+        itemsArr.sort((a, b) => a.children[4].innerHTML - b.children[4].innerHTML);
+
+        for (i = 0; i < itemsArr.length; ++i) {
+            tbody.appendChild(itemsArr[i]);
+        }
+        update();
+    }
+
+    function trier_Continent() {
+        var itemsArr = [];
+        for (var i in tbody.childNodes) {
+            if (tbody.childNodes[i].nodeType == 1) {
+                itemsArr.push(tbody.childNodes[i]);
+            }
+        }
+        var i = 0;
+        var j;
+        while (i < itemsArr.length) {
+            j = i + 1;
+            while (j < itemsArr.length) {
+                if (itemsArr[j].children[5].innerHTML < itemsArr[i].children[5].innerHTML) {
+                    var tempStr = itemsArr[i];
+                    itemsArr[i] = itemsArr[j];
+                    itemsArr[j] = tempStr;
+                }
+                else if (itemsArr[j].children[5].innerHTML == itemsArr[i].children[5].innerHTML) {
+                    if (itemsArr[j].children[1].innerHTML < itemsArr[i].children[1].innerHTML) {
+                        var tempStr = itemsArr[i];
+                        itemsArr[i] = itemsArr[j];
+                        itemsArr[j] = tempStr;
+                    }
+                } 
+                j++;
+            }
+            i++;
+        }
+
+        for (i = 0; i < itemsArr.length; ++i) {
+            tbody.appendChild(itemsArr[i]);
+        }
+        update();
+    }
+
+    // Ajout du style pour voir quel champ a été sélectionné (TRI)
+    var thNom = document.querySelector('.thNom');
+    var thPop = document.querySelector('.thPop');
+    var thSurf = document.querySelector('.thSurf');
+    var thDens = document.querySelector('.thDens');
+    var thCont = document.querySelector('.thCont');
+
+    thNom.addEventListener('click', () => {
+        thNom.classList.add('thFocus');
+        thPop.classList.remove('thFocus');
+        thSurf.classList.remove('thFocus');
+        thDens.classList.remove('thFocus');
+        thCont.classList.remove('thFocus');
+    });
+
+    thPop.addEventListener('click', () => {
+        thNom.classList.remove('thFocus');
+        thPop.classList.add('thFocus');
+        thSurf.classList.remove('thFocus');
+        thDens.classList.remove('thFocus');
+        thCont.classList.remove('thFocus');
+    });
+
+    thSurf.addEventListener('click', () => {
+        thNom.classList.remove('thFocus');
+        thPop.classList.remove('thFocus');
+        thSurf.classList.add('thFocus');
+        thDens.classList.remove('thFocus');
+        thCont.classList.remove('thFocus');
+    });
+
+    thDens.addEventListener('click', () => {
+        thNom.classList.remove('thFocus');
+        thPop.classList.remove('thFocus');
+        thSurf.classList.remove('thFocus');
+        thDens.classList.add('thFocus');
+        thCont.classList.remove('thFocus');
+    });
+
+    thCont.addEventListener('click', () => {
+        thNom.classList.remove('thFocus');
+        thPop.classList.remove('thFocus');
+        thSurf.classList.remove('thFocus');
+        thDens.classList.remove('thFocus');
+        thCont.classList.add('thFocus');
+    });
 
 </script>
 

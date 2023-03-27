@@ -6,74 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pays TP REST Countries</title>
-    <style>
-        body {
-            margin: 5% 10%;
-            background-color: #141b33;
-        }
-
-        h1 {
-            font-family: sans-serif;
-            color: white;
-            text-align: center;
-            text-transform: uppercase;
-        }
-
-        tbody {
-            border-end-start-radius: 20px;
-        }
-
-        table {
-            width: 100%;
-            height: max-content;
-            margin-bottom: 20px;
-            font-family: sans-serif;
-            box-shadow: 0 3px 5px black;
-            border-collapse: collapse;
-            border-radius: 1em;
-        }
-
-        thead {
-            position: sticky;
-            top: -1px;
-            z-index: 2;
-        }
-
-        th,
-        td {
-            text-align: left;
-            padding: 1em;
-        }
-
-        th {
-            background-color: #20273d;
-            font-weight: bold;
-            color: rgb(223, 223, 223);
-            border: solid 1px #161d35;
-        }
-
-        td {
-            background-color: #3a4054;
-            height: max-content;
-            border: solid 1px #20273d;
-            color: rgb(223, 223, 223);
-        }
-
-        tr:nth-child(even) {
-            background-color: #f2f2f2;
-        }
-
-        .url {
-            display: flex;
-            justify-content: center;
-        }
-
-        img {
-            width: 150px;
-            display: flex;
-            justify-content: center;
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
@@ -96,7 +29,7 @@
 
 </body>
 
-<script src="countries.js"></script>
+<script src="../countries.js"></script>
 <script>
 
     const tbody = document.querySelector('tbody');

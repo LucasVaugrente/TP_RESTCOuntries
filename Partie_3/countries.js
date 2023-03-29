@@ -17,7 +17,7 @@ function process () {
         if (xhr.status == 200) {
             countries = JSON.parse(xhr.responseText);
 
-            //Remplissage du tableau
+            // Remplissage du tableau
             fill_db();
             deleteUndefinedCountries();
 

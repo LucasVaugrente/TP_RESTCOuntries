@@ -521,7 +521,7 @@
 
         if (param2 == "tout_cont") {
             cont_form = null;
-        } else if(param2 == "tout_lan") {
+        } else if (param2 == "tout_lan") {
             lang_form = null;
         }
 
@@ -531,14 +531,14 @@
         afficherPays(cont_form, lang_form, nom_form);
         update();
 
-        if(cont_form == null && lang_form == null && nom_form == null) {
+        if (cont_form == null && lang_form == null && nom_form == null) {
             afficheBoutons();
             suivant_f.style.display = "none";
         }
         else {
             afficheBoutonsFiltres();
         }
-        
+
     }
 
     /**

@@ -18,7 +18,7 @@
             <div class="contfiltrage">
                 <label for="continents">Choisissez un continent :</label>
                 <select id="continents" name="continents">
-                    <option value="">-- CHOISIR --</option>
+                    <option value="tout_cont">-- CHOISIR --</option>
                 </select>
                 <button type="button"
                     onclick="filtres(document.querySelector('#continents'), document.querySelector('#continents').value)">OK</button>
@@ -27,7 +27,7 @@
             <div class="languesfiltrage">
                 <label for="langues">Choisissez une langue :</label>
                 <select id="langues" name="langues">
-                    <option value="">-- CHOISIR --</option>
+                    <option value="tout_lan">-- CHOISIR --</option>
                 </select>
                 <button type="button"
                     onclick="filtres(document.querySelector('#langues'), document.querySelector('#langues').value)">OK</button>
@@ -553,6 +553,11 @@
 
     /* ###################### FONCTIONS TRI ###################### */
 
+    /**
+     * 
+     * Fonction qui trie selon le nom du pays en ordre alphabéthique avec le champ NOM
+     * 
+     */
     function trier_Nom() {
         var itemsArr = [];
         for (var i in tbody.childNodes) {
@@ -580,6 +585,11 @@
         update();
     }
 
+    /**
+     * 
+     * Fonction qui trie selon la population du pays en ordre croissant avec le champ POPULATION
+     * 
+     */
     function trier_Pop() {
         var itemsArr = [];
         for (var i in tbody.childNodes) {
@@ -595,6 +605,11 @@
         update();
     }
 
+    /**
+     * 
+     * Fonction qui trie selon la surface du pays en ordre croissant avec le champ SURFACE
+     * 
+     */
     function trier_Surface() {
         var itemsArr = [];
         for (var i in tbody.childNodes) {
@@ -611,6 +626,11 @@
         update();
     }
 
+    /**
+     * 
+     * Fonction qui trie selon la densité du pays en ordre croissant avec le champ DENSITE
+     * 
+     */
     function trier_Dens() {
         var itemsArr = [];
         for (var i in tbody.childNodes) {
@@ -626,6 +646,11 @@
         update();
     }
 
+    /**
+     * 
+     * Fonction qui trie selon le continent du pays en ordre alphabéthique avec le champ CONTINENT. Si 2 pays sont du même continent, cela est trié selon leurs noms français
+     * 
+     */
     function trier_Continent() {
         var itemsArr = [];
         for (var i in tbody.childNodes) {
@@ -649,7 +674,7 @@
                         itemsArr[i] = itemsArr[j];
                         itemsArr[j] = tempStr;
                     }
-                } 
+                }
                 j++;
             }
             i++;

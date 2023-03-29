@@ -555,7 +555,7 @@
 
     /**
      * 
-     * Fonction qui trie selon le champ Nom
+     * Fonction qui trie selon le nom du pays en ordre alphabéthique avec le champ NOM
      * 
      */
     function trier_Nom() {
@@ -585,6 +585,11 @@
         update();
     }
 
+    /**
+     * 
+     * Fonction qui trie selon la population du pays en ordre croissant avec le champ POPULATION
+     * 
+     */
     function trier_Pop() {
         var itemsArr = [];
         for (var i in tbody.childNodes) {
@@ -600,6 +605,11 @@
         update();
     }
 
+    /**
+     * 
+     * Fonction qui trie selon la surface du pays en ordre croissant avec le champ SURFACE
+     * 
+     */
     function trier_Surface() {
         var itemsArr = [];
         for (var i in tbody.childNodes) {
@@ -616,6 +626,11 @@
         update();
     }
 
+    /**
+     * 
+     * Fonction qui trie selon la densité du pays en ordre croissant avec le champ DENSITE
+     * 
+     */
     function trier_Dens() {
         var itemsArr = [];
         for (var i in tbody.childNodes) {
@@ -631,6 +646,11 @@
         update();
     }
 
+    /**
+     * 
+     * Fonction qui trie selon le continent du pays en ordre alphabéthique avec le champ CONTINENT. Si 2 pays sont du même continent, cela est trié selon leurs noms français
+     * 
+     */
     function trier_Continent() {
         var itemsArr = [];
         for (var i in tbody.childNodes) {

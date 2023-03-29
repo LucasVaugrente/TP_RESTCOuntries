@@ -24,7 +24,6 @@ function process () {
             // Affichage des pays
             afficherPays(null, null, null);
             update();
-            num_page += 1;
             afficheBoutons();
             
             //Création des filtres

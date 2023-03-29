@@ -4,16 +4,22 @@
  * Pays dont au moins un pays frontalier n’est pas dans le même continent
  */
 function outsideTheContinent() {
+    console.log(`Pays dont au moins un pays frontalier n’est pas dans le même continent :`);
+    console.log("");
+    let listePays = [];
     for (let codeAlpha3 in all_countries) {
         let countrie = all_countries[codeAlpha3];
         let continent = countrie.continent;
         let borders = countrie.getBorders();
         for (const borderCountrie of borders) {
-            if(borderCountrie.continent != continent){
-                console.log(`${borderCountrie.nom} (${borderCountrie.continent}) est  frontalié avec ${countrie.nom} (${continent})`);
+            if(borderCountrie.continent != continent && !listePays.includes(countrie.nom)){
+                console.log(`${countrie.nom} [${countrie.codeAlpha3}], ${continent}`);
+                listePays.push(countrie.nom);
             }
         }
     }
+    console.log("");
+    console.log(`${listePays.length} Resultats.`);
 }
 //outsideTheContinent();
 
@@ -22,6 +28,8 @@ function outsideTheContinent() {
  * Pays (possibilité de plusieurs) ayant le plus grand nombre de voisins. Achez aussi les voisins
  */
 function moreNeighbors() {
+    console.log(`Pays (possibilité de plusieurs) ayant le plus grand nombre de voisins.Affichez aussi les voisins.`);
+    console.log("");
     let max = 0;
     let voisins = [];
     let res = null;
@@ -37,10 +45,9 @@ function moreNeighbors() {
             }
         }
     }
-    console.log("Pays ayant le plus de voisins -> " + res.toString());
-    console.log(`Ses voisins : `);
+    console.log(`${res.nom} [${res.codeAlpha3}], ${res.continent} ${voisins.length} voisins:`);
     for (let i = 0; i < voisins.length; i++) {
-        console.log("   " + voisins[i].toString());
+        console.log(`- ${voisins[i].nom} [${voisins[i].codeAlpha3}], ${voisins[i].continent}`);
     }
 }
 //moreNeighbors();
@@ -50,17 +57,19 @@ function moreNeighbors() {
  * Pays n’ayant aucun voisin.
  */
 function neighborless() {
+    console.log(`Pays n’ayant aucun voisin :`);
+    console.log("");
     let res = [];
     for (const country in all_countries) {
         if (all_countries[country].paysFrontaliers == null) {
             res.push(all_countries[country]);
         }
     }
-    console.log(`Pays n'ayant aucun voisin : (${res.length} pays)`);
     for (let i = 0; i < res.length; i++) {
-        console.log("   " + res[i].toString());
+        console.log(`- ${res[i].nom} [${res[i].codeAlpha3}], ${res[i].continent}`);
     }
-    return res;
+    console.log("");
+    console.log(`${res.length} Resultats.`);
 }
 //neighborless();
 
@@ -70,7 +79,8 @@ function neighborless() {
  **/
 function moreLanguages() {
     let listCountrieMoreLanguages= [];
-    
+    console.log(`Pays (possibilité de plusieurs) parlant le plus de langues. Affichez aussi les langues `);
+    console.log("");
     for (let codeAlpha3 in all_countries) {
         let countrie = all_countries[codeAlpha3];
         let languagesCountrie = countrie.langues;
@@ -89,7 +99,7 @@ function moreLanguages() {
 
     // AFFICHAGE
     for (const countrieMoreLanguages of listCountrieMoreLanguages) {
-        console.log(`${countrieMoreLanguages.nom} possède ${countrieMoreLanguages.langues.length} langues différentes: `);
+        console.log(`${countrieMoreLanguages.nom} [${countrieMoreLanguages.codeAlpha3}], ${countrieMoreLanguages.continent} - Langues parlées : ${countrieMoreLanguages.langues.length}: `);
         for (const language of countrieMoreLanguages.langues) {
             console.log(`- ${language.name} (${language.iso639_2})`);
         }
@@ -104,7 +114,9 @@ function moreLanguages() {
  * Pays ayant au moins un voisin parlant l’une de ses langues. Affichez aussi les pays voisins et les langues en question.
  */
 function withCommonLanguage() {
-    let listeCountrieWithCommonLanguage = [];
+    console.log(`Pays ayant au moins un voisin parlant l’une de ses langues. Affichez aussi les pays voisins et les langues en question :`);
+    console.log("");
+    let listeCountrieWithCommonLanguage = {};
     for (let codeAlpha3 in all_countries) {
         let countrie = all_countries[codeAlpha3];
         let languagesCountrie = countrie.langues;
@@ -114,8 +126,10 @@ function withCommonLanguage() {
             for (const Borderlangues of languagesBorderCountrie) {
                 for (const langues of languagesCountrie) {
                     if(langues.iso639_2 == Borderlangues.iso639_2){
-                        if(listeCountrieWithCommonLanguage.indexOf([borderCountrie,countrie])== -1 && listeCountrieWithCommonLanguage.indexOf([countrie,borderCountrie])== -1){
-                            listeCountrieWithCommonLanguage.push([borderCountrie,countrie]);
+                        if(listeCountrieWithCommonLanguage[countrie.codeAlpha3] == undefined){
+                            listeCountrieWithCommonLanguage[countrie.codeAlpha3] = [[borderCountrie,langues]];
+                        }else{
+                            listeCountrieWithCommonLanguage[countrie.codeAlpha3].push([borderCountrie,langues]);
                         }
                     } 
                 }
@@ -123,20 +137,16 @@ function withCommonLanguage() {
         }
     }
     
-    for (const countrieWithCommonLanguage of listeCountrieWithCommonLanguage){
-        let listeCommonLanguage = [];
-        for (const langue1 of countrieWithCommonLanguage[0].langues) {
-            for (const langues2 of countrieWithCommonLanguage[1].langues) {
-                if(langue1.iso639_2 == langues2.iso639_2){
-                    listeCommonLanguage.push(langue1.name);
-                }
-            }
+    for (const codeAlpha3 in listeCountrieWithCommonLanguage){
+        console.log(`## ${all_countries[codeAlpha3].nom}[${codeAlpha3}],${all_countries[codeAlpha3].continent}`);
+        console.log("Voisin(s) : ")
+        for (const countrieWithCommonLanguage of listeCountrieWithCommonLanguage[codeAlpha3]){
+            console.log(`// ${countrieWithCommonLanguage[0].nom}[${countrieWithCommonLanguage[0].codeAlpha3}], ${countrieWithCommonLanguage[0].continent} ~~ ${countrieWithCommonLanguage[1].name} [${countrieWithCommonLanguage[1].iso639_2}]`);
         }
-        console.log(`"${countrieWithCommonLanguage[0].nom}" et "${countrieWithCommonLanguage[1].nom}" sont voisins et parlent en commun ${listeCommonLanguage}`);
-        console.log(" ");
-        console.log("--------------------------------");
-        console.log(" ");
+        console.log("=======================================================================");
     }
+    console.log("");
+    console.log(`${Object.keys(listeCountrieWithCommonLanguage).length} Resultats.`);
 
 }
 //withCommonLanguage();
@@ -180,14 +190,20 @@ function withoutCommonCurrency() {
             res.push(all_countries[country]);
         }
     }
+    console.log(`Pays n’ayant aucun voisin ayant au moins une de ses monnaies :`);
+    console.log("");
     for (let i = 0; i < res.length; i++) {
-        console.log(res[i].toString());        
+        console.log(`- ${res[i].nom}`);        
     }
+    console.log("");
+    console.log(`${res.length} Resultats.`);
 }
 //withoutCommonCurrency();
 
 
 // Question 7
+
+
 /**
  * Pays triés par ordre décroissant de densité de
 population.
@@ -195,9 +211,12 @@ population.
 function sortingDecreasingDensity() {
     res = all_countries;
     res2 = [];
-
+    undefinedPopDensity = []
     let cpt = 0;
-    for (const country in res) {
+    for (const codeAlpha3 in res) {
+        if(res[codeAlpha3].getPopDensity() == null){
+            undefinedPopDensity.push(res[codeAlpha3]);
+        }
         cpt++;
     }
     
@@ -217,11 +236,14 @@ function sortingDecreasingDensity() {
         }
     }
 
-    cpt = 1;
+    
     
     for (const countrie of res2) {
-        console.log(`N°${cpt} : ${countrie.nom} (${countrie.getPopDensity()})`);
-        cpt++;
+        console.log(`- ${countrie.nom} [${countrie.codeAlpha3}] : ${countrie.getPopDensity()} hab./km²`);
+    }
+
+    for (const countrie of undefinedPopDensity) {
+        console.log(`- ${countrie.nom} [${countrie.codeAlpha3}] : Unknown`);
     }
     
 }
@@ -229,15 +251,18 @@ function sortingDecreasingDensity() {
 
 // Question 8
 function moreTopLevelDomains() {
+    console.log(`Pays ayant plusieurs Top Level Domains Internet : `);
+    console.log("");
+    let cpt = 0;
     for (const country in all_countries) {
         if (all_countries[country]._topLevelDomains.length > 1) {
-            console.log(`${all_countries[country].nom} possède ${all_countries[country].topLevelDomains.length} Top Level Domains Internet : `);
-            for (const topLevelDomains of all_countries[country].topLevelDomains) {
-                console.log(`${topLevelDomains}`);
-            }
-            console.log("");
+            console.log(`${all_countries[country].nom} [${all_countries[country].codeAlpha3}], ${all_countries[country].continent} <> Top Level Domain : ${all_countries[country].topLevelDomains} `);
+            cpt++;
+
         } 
     }
+    console.log("");
+    console.log(`${cpt} Resultats.`);
 }
 //moreTopLevelDomains();
 
@@ -285,4 +310,4 @@ function veryLongTrip(nom_pays){
         console.log(`- ${Countrie}`);
     }
 }
-veryLongTrip("France");
+//veryLongTrip("France");

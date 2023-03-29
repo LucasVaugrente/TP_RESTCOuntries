@@ -20,7 +20,7 @@ function process () {
             // Remplissage du tableau
             fill_db();
             deleteUndefinedCountries();
-
+            
             // Affichage des pays
             afficherPays(null, null, null);
             update();

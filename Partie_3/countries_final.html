@@ -18,7 +18,7 @@
             <div class="contfiltrage">
                 <label for="continents">Choisissez un continent :</label>
                 <select id="continents" name="continents">
-                    <option value="">-- CHOISIR --</option>
+                    <option value="tout_cont">-- CHOISIR --</option>
                 </select>
                 <button type="button"
                     onclick="filtres(document.querySelector('#continents'), document.querySelector('#continents').value)">OK</button>
@@ -27,7 +27,7 @@
             <div class="languesfiltrage">
                 <label for="langues">Choisissez une langue :</label>
                 <select id="langues" name="langues">
-                    <option value="">-- CHOISIR --</option>
+                    <option value="tout_lan">-- CHOISIR --</option>
                 </select>
                 <button type="button"
                     onclick="filtres(document.querySelector('#langues'), document.querySelector('#langues').value)">OK</button>
